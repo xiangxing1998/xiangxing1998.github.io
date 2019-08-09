@@ -157,17 +157,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="线程通信（一）-线程"><a href="#线程通信（一）-线程" class="headerlink" title="线程通信（一）^线程"></a>线程通信（一）<a href="Thread">^线程</a></h1><!--多线程之间的通信能避免对同一共享变量的争夺-->
-
+        <h1 id="线程通信（一）"><a href="#线程通信（一）" class="headerlink" title="线程通信（一）"></a>线程通信（一）</h1><p><strong><em>多线程之间的通信能避免对同一共享变量的争夺</em></strong></p>
 <h2 id="线程之间通信的两个基本问题："><a href="#线程之间通信的两个基本问题：" class="headerlink" title="线程之间通信的两个基本问题："></a>线程之间通信的两个基本问题：</h2><ul>
 <li><strong>多线程间同步</strong>：一个线程的处理结果，为另一个线程的输入。</li>
 <li><strong>多线程间互斥</strong>：两个线程需要访问同一资源，该资源在同一时刻只能被一个线程访问，这种关系称之为线程间对资源的互斥访问。</li>
 </ul>
 <p><strong>锁机制：防止某进程在访问资源时，其他进程也访问该资源</strong></p>
+<p>加锁保证共享资源当前只被一个线程访问。</p>
+<p>wait()、notify()、notifyAll()方法</p>
 <p>要保证当前线程正在访问资源，它有锁的拥有权，才能调用wait方法，释放它对锁的拥有权。</p>
 <p>对象—-对象监视器—-该对象的锁（对象有资源，上锁）—-该锁上的线程。</p>
 <p>IPC: 进程间通信（Inter-Process Communication）</p>
-<p>参考博客资源: <a href="https://www.cnblogs.com/Wenxu/p/7979023.html" target="_blank" rel="noopener">多进程之间的通信</a></p>
+<p>参考博客资源: </p>
+<p><a href="https://www.cnblogs.com/Wenxu/p/7979023.html" target="_blank" rel="noopener">1. 多进程之间的通信</a></p>
+<p><a href="https://www.cnblogs.com/mengyan/archive/2012/08/30/2664607.html" target="_blank" rel="noopener">2. 进程间通信(IPC)方法</a></p>
+<p><a href="https://www.cnblogs.com/Wenxu/p/7942757.html" target="_blank" rel="noopener">3. 线程的定义、状态、属性、简单实现线程</a></p>
+<p><a href="https://www.cnblogs.com/Wenxu/p/7944624.html" target="_blank" rel="noopener">4. 多线程之间的同步</a></p>
 
       
 
