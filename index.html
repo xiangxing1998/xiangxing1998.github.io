@@ -130,34 +130,22 @@
 </blockquote>
 <p>CPU用来执行任务</p>
 <p><img src="https://wx1.sinaimg.cn/mw690/006fou7Wgy1g5vg81dupuj30wq0afjw0.jpg" alt="并发与并行"></p>
-<h2 id="二、进程与线程"><a href="#二、进程与线程" class="headerlink" title="二、进程与线程"></a>二、进程与线程</h2><blockquote>
-<!--以下两幅图中有部分错误，参考黑马程序员课程，可能不严谨，若有：后面返回更正-->
-</blockquote>
+<h2 id="二、进程与线程"><a href="#二、进程与线程" class="headerlink" title="二、进程与线程"></a>二、进程与线程</h2><p><del>注：以下两幅图中有部分错误，参考黑马程序员课程，可能不严谨，若有：后面返回更正</del></p>
 <p>Ctrl + Alt +Delete       开启任务管理器，查看电脑当前进程，以及进程中的线程数</p>
-<blockquote>
-<p><strong>*<u>进程</u>*</strong>是系统运行程序的基本单位</p>
+<p><strong><u>进程</u></strong>是系统运行程序的基本单位</p>
 <p>系统运行一个程序，（软件封装应用程序），是一个进程从创建、运行到消亡的过程。</p>
-</blockquote>
 <p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5vvrfknydj30pv097td9.jpg" alt="进程"></p>
-<blockquote>
-<p><strong>*<u>线程</u>*</strong>是进程中的一个执行单元，负责当前进程中程序的执行</p>
+<p><strong><u>线程</u></strong>是进程中的一个执行单元，负责当前进程中程序的执行</p>
 <p>一个程序运行后至少有一个线程，一个进程可以包含多个线程</p>
-</blockquote>
 <p><img src="https://wx2.sinaimg.cn/mw690/006fou7Wly1g5vvs6aj06j30sr0c1116.jpg" alt="线程"></p>
-<h2 id="三、线程调度"><a href="#三、线程调度" class="headerlink" title="三、线程调度"></a>三、线程调度</h2><blockquote>
-<ul>
-<li>分时调度</li>
-</ul>
-<blockquote>
+<h2 id="三、线程调度"><a href="#三、线程调度" class="headerlink" title="三、线程调度"></a>三、线程调度</h2><ul>
+<li><p>分时调度</p>
 <p>所有线程轮流使用CPU的使用权，平均分配给每个线程占用CPU的时间</p>
-</blockquote>
-<ul>
-<li>抢占式调度</li>
-</ul>
-<blockquote>
+</li>
+<li><p>抢占式调度</p>
 <p>优先让优先级高的线程使用CPU，如果线程的优先级相同，那么会随机选择一个（线程随机性），Java使用的是抢占式调度</p>
-</blockquote>
-</blockquote>
+</li>
+</ul>
 <p>可以在任务管理器中设置线程的优先级</p>
 <p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5vvsc90emj30k40d1k1i.jpg" alt="线程调度"></p>
 <h2 id="四、主线程"><a href="#四、主线程" class="headerlink" title="四、主线程"></a>四、主线程</h2><p>Java使用java.lang.Thread类代表线程，所有线程对象都必须是Thread类或其子类的实例。每个线程的作用是完成一定的任务，实际上就是执行一段程序流即一段顺序执行的代码。Java使用线程执行体来代表这段程序流。</p>
@@ -168,11 +156,9 @@
 <li>调用线程对象的start()方法来启动该线程。</li>
 </ol>
 <p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5vvsjb49yj30tn0c1q7q.jpg" alt="主进程"></p>
-<blockquote>
 <p>对这种只有一个主线程的单线程程序而言：</p>
 <p>若主线程中出现了一个异常，会终止，阻碍该线程中剩余代码的执行。</p>
 <p>可若使用多线程，那么若有一个线程出现异常中止，不会阻碍其它线程的执行。</p>
-</blockquote>
 
       
     </div>
