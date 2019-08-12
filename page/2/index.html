@@ -63,6 +63,43 @@
       <div id="middlecontent" title class="global-width sidebar-right">
         <section id="main">
   
+    <article id="post-orderTable_BasOper" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/09/orderTable_BasOper/">数据结构---顺序表的基本操作</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/08/09/orderTable_BasOper/" class="article-date">
+  <time datetime="2019-08-09T01:56:29.690Z" itemprop="datePublished">2019-08-09</time>
+</a>
+    
+    
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h2 id="—增加、删除、查找、更改"><a href="#—增加、删除、查找、更改" class="headerlink" title="—增加、删除、查找、更改"></a>—增加、删除、查找、更改</h2><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#define Size 5</span><br><span class="line">//本程序示范对顺序表的一些基本操作，包括增加、删除、查找、更改 </span><br><span class="line">typedef struct&#123;</span><br><span class="line">	int *head;//动态数组指针 </span><br><span class="line">	int length;</span><br><span class="line">	int size;</span><br><span class="line">&#125;Table; </span><br><span class="line"></span><br><span class="line">Table initTable()&#123;</span><br><span class="line">	Table t;</span><br><span class="line">	t.head = (int*)malloc(Size*sizeof(int));</span><br><span class="line">	if(!t.head)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化失败&quot;);</span><br><span class="line">		exit(0);</span><br><span class="line">	&#125;</span><br><span class="line">	t.length = 0;</span><br><span class="line">	t.size = Size;</span><br><span class="line">	return t;</span><br><span class="line">&#125;</span><br><span class="line">//add指的是顺序表中第几个位置，而非索引 </span><br><span class="line">Table addTable(Table t,int elem,int add)</span><br><span class="line">&#123;</span><br><span class="line">	if(add&gt;t.length+1||add&lt;1)&#123;</span><br><span class="line">		printf(&quot;插入位置有问题&quot;);</span><br><span class="line">		 return t;</span><br><span class="line">	&#125;</span><br><span class="line">	if(t.length&gt;=t.size)&#123;</span><br><span class="line">		//若加入后数据表元素个数即长度大于存储容量，则再分配内存</span><br><span class="line">		t.head = (int*)realloc(t.head,(t.size+1)*sizeof(int));</span><br><span class="line">		if(!t.head)&#123;</span><br><span class="line">			printf(&quot;存储分配失败&quot;);</span><br><span class="line">		&#125; </span><br><span class="line">		t.size+=1;</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i=t.length-1;i&gt;=add-1;i--)&#123;</span><br><span class="line">		t.head[i+1]=t.head[i];//后面一个元素等于前面一个元素，相当于从某个位置开始整体后移 </span><br><span class="line">	&#125;</span><br><span class="line">	t.head[add-1]=elem;</span><br><span class="line">	t.length++;</span><br><span class="line">	return t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Table delTable(Table t,int add)&#123;</span><br><span class="line">	if(add&gt;t.length||add&lt;1)&#123;</span><br><span class="line">		printf(&quot;被删除元素的位置有误&quot;);</span><br><span class="line">		exit(0);</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i=add;i&lt;t.length;i++)&#123;</span><br><span class="line">		t.head[i-1]=t.head[i];</span><br><span class="line">	&#125;</span><br><span class="line">	t.length--;</span><br><span class="line">	return t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int selectTable(Table t,int elem)&#123;</span><br><span class="line">	for(int i=0;i&lt;t.length;i++)&#123;</span><br><span class="line">		if(t.head[i]==elem)&#123;</span><br><span class="line">			return i+1;//返回的是第几个位置，不是索引 </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return -1;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">Table amendTable(Table t,int elem,int newElem)&#123;</span><br><span class="line">	int add=selectTable(t,elem);//选出的是第几个位置，-1就是索引，索引从0开始 </span><br><span class="line">	t.head[add-1] = newElem;</span><br><span class="line">	return t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void displayTable(Table t)&#123;</span><br><span class="line">	for(int i=0;i&lt;t.length;i++)&#123;</span><br><span class="line">		printf(&quot;%d&quot;,t.head[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	Table a_t=initTable();</span><br><span class="line">	for(int i=1;i&lt;=Size;i++)&#123;</span><br><span class="line">		a_t.head[i-1] = i;</span><br><span class="line">		a_t.length++;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	printf(&quot;原顺序表:\n&quot;);</span><br><span class="line">	displayTable(a_t);</span><br><span class="line">	</span><br><span class="line">	printf(&quot;删除元素1（即第一个位置的元素）:\n&quot;);</span><br><span class="line">	a_t = delTable(a_t,1);</span><br><span class="line">	displayTable(a_t);</span><br><span class="line">	</span><br><span class="line">	printf(&quot;在第2的位置插入元素5:\n&quot;);</span><br><span class="line">	a_t = addTable(a_t,5,2);</span><br><span class="line">	displayTable(a_t);</span><br><span class="line">	</span><br><span class="line">	printf(&quot;查找元素3的位置:\n&quot;); </span><br><span class="line">	int add = selectTable(a_t,3);//a_t是个结构体变量，它存储着顺序表的信息，把它就看做顺序表更好理解一些，实际上不是</span><br><span class="line">	printf(&quot;%d\n&quot;,add);</span><br><span class="line">	</span><br><span class="line">	printf(&quot;将元素3改为6:\n&quot;);</span><br><span class="line">	a_t = amendTable(a_t,3,6);</span><br><span class="line">	displayTable(a_t);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
     <article id="post-orderTable_create" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
@@ -386,6 +423,10 @@
       <ul>
         
           <li>
+            <a href="/2019/08/12/lineLink_BasOper/">双向链表基本操作</a>
+          </li>
+        
+          <li>
             <a href="/2019/08/12/lineLink_create/">双向链表及其创建（C语言）</a>
           </li>
         
@@ -399,10 +440,6 @@
         
           <li>
             <a href="/2019/08/11/fromWutToHuaWei/">勉成国器</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/11/staticLinkTable_BasOper/">数据结构---静态链表的基本操作</a>
           </li>
         
       </ul>
