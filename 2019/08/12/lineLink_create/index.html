@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>双向链表及其创建（C语言） | 项兴的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="当算法中需要大量查找指定节点的前驱节点时，若使用只有指向直接后继节点的指针的单链表，无疑是灾难性的。  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include &amp;lt;stdio.h&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="双向链表及其创建（C语言）">
+<meta property="og:url" content="http://yoursite.com/2019/08/12/lineLink_create/index.html">
+<meta property="og:site_name" content="项兴的个人博客">
+<meta property="og:description" content="当算法中需要大量查找指定节点的前驱节点时，若使用只有指向直接后继节点的指针的单链表，无疑是灾难性的。  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include &amp;lt;stdio.h&amp;gt">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/006fou7Wly1g5wom8ls86j30lr0bpgms.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/006fou7Wly1g5wpq774pqj30ll03agli.jpg">
+<meta property="og:updated_time" content="2019-08-12T03:04:48.076Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="双向链表及其创建（C语言）">
+<meta name="twitter:description" content="当算法中需要大量查找指定节点的前驱节点时，若使用只有指向直接后继节点的指针的单链表，无疑是灾难性的。  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include &amp;lt;stdio.h&amp;gt">
+<meta name="twitter:image" content="https://wx4.sinaimg.cn/mw690/006fou7Wly1g5wom8ls86j30lr0bpgms.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="项兴的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/wuticon.webp">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
+</head>
+</html>
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" title="图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-lineLink_create" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      双向链表及其创建（C语言）
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/08/12/lineLink_create/" class="article-date">
+  <time datetime="2019-08-12T03:04:42.531Z" itemprop="datePublished">2019-08-12</time>
+</a>
+    
+    
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>当算法中需要<strong>大量查找指定节点的前驱节点</strong>时，若使用只有指向直接后继节点的指针的单链表，无疑是灾难性的。</p>
+<p><img src="https://wx4.sinaimg.cn/mw690/006fou7Wly1g5wom8ls86j30lr0bpgms.jpg" alt="双向链表"></p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="comment">//节点结构</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">line</span> *<span class="title">prior</span>;</span></span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">line</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;line; </span><br><span class="line"></span><br><span class="line"><span class="comment">//函数定义在main函数之后，先声明出来，就可之后定义</span></span><br><span class="line"><span class="comment">//双向链表的创建函数 </span></span><br><span class="line"><span class="function">line* <span class="title">initLine</span><span class="params">(line *head)</span></span>;</span><br><span class="line"><span class="comment">// 输出双链表的函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">(line *head)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//创建一个头指针</span></span><br><span class="line">	line *head=<span class="literal">NULL</span>;</span><br><span class="line">	<span class="comment">//调用链表创建函数</span></span><br><span class="line">	head=initLine(head);</span><br><span class="line">	<span class="comment">//输出创建好的链表</span></span><br><span class="line">	display(head);</span><br><span class="line">	<span class="comment">//来表现一下双链表的优点</span></span><br><span class="line"><span class="comment">//    printf("链表中第4个节点的直接前驱是：%d",head-&gt;next-&gt;next-&gt;next-&gt;prior-&gt;data);//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">//line*表明返回值为结构体指针类型，返回一个地址 </span></span><br><span class="line"><span class="function">line* <span class="title">initLine</span><span class="params">(line *head)</span></span>&#123;</span><br><span class="line">	<span class="comment">//创建一个首元节点，链表的头指针为head</span></span><br><span class="line">	head=(line*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(line));</span><br><span class="line">	<span class="comment">//对节点进行初始化 </span></span><br><span class="line">	head-&gt;prior=<span class="literal">NULL</span>;</span><br><span class="line">	head-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	head-&gt;data=<span class="number">1</span>;</span><br><span class="line">	<span class="comment">//声明一个指向首元节点（头节点）的指针，方便后期向链表中添加新创建的节点</span></span><br><span class="line">	line *<span class="built_in">list</span>=head;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=<span class="number">5</span>;i++)&#123;</span><br><span class="line">		<span class="comment">//创建新的节点并初始化   //指针变量初始化时为另一个变量的地址 </span></span><br><span class="line">		line *body=(line*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(line));</span><br><span class="line">		body-&gt;prior=<span class="literal">NULL</span>;</span><br><span class="line">		body-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">		body-&gt;data=i;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//首元节点（头节点）与链表最后一个节点建立关系</span></span><br><span class="line">		<span class="built_in">list</span>-&gt;next=body;<span class="comment">//对指针赋值赋地址</span></span><br><span class="line">		body-&gt;prior=<span class="built_in">list</span>;</span><br><span class="line">		<span class="comment">//list永远指向链表中最后一个节点</span></span><br><span class="line">		<span class="built_in">list</span>=<span class="built_in">list</span>-&gt;next; </span><br><span class="line">	&#125; </span><br><span class="line">	<span class="comment">//返回新创建的链表</span></span><br><span class="line">	<span class="keyword">return</span> head; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">(line *head)</span></span>&#123;</span><br><span class="line">	line *temp=head;</span><br><span class="line">	<span class="keyword">while</span>(temp)&#123;</span><br><span class="line">		<span class="comment">//如果该节点无后继节点，说明此节点是链表最后一个节点</span></span><br><span class="line">		<span class="keyword">if</span>(temp-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,temp-&gt;data);</span><br><span class="line">		&#125; </span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d&lt;-&gt;"</span>,temp-&gt;data);</span><br><span class="line">		&#125;</span><br><span class="line">		temp=temp-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果如图:</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/006fou7Wly1g5wpq774pqj30ll03agli.jpg" alt="result"></p>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2019/08/12/loopLink/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">循环链表实现约瑟夫环</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/lixian.png" title="图片来自网络"></img>
+    <h3 class="avatar-name">
+      
+        项兴
+      
+    </h3>
+    <p class="avatar-slogan">
+      武汉理工大学学生
+    </p>
+  </div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=200 height=86 src="//music.163.com/outchain/player?type=2&id=757567&auto=1&height=66"></iframe>
+</div>
+
+
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/12/lineLink_create/">双向链表及其创建（C语言）</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/12/loopLink/">循环链表实现约瑟夫环</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/11/Thread01/">Java线程实现方式(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/11/fromWutToHuaWei/">勉成国器</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/11/staticLinkTable_BasOper/">数据结构---静态链表的基本操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://xiangxing1998.github.io/" title target='_blank'
+        >我的博客</a>
+      
+        <a style="display: block;" href="https://weibo.com/u/5724277716?is_all=1" title target='_blank'
+        >新浪微博</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2019 Xiangxing &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>
