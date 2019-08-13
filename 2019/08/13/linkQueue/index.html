@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>链式队列及基本操作 | 项兴的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="链表节点是随用随取物理空间的，出队后需要释放内存空间。实时申请空间。 链表当有头节点时，头指针指向头节点，但头节点中数据域不存储值。有的是首元节点。 这里我们使用的链表有头节点，方便操作，第一个入队的数据元素存储在首元节点中。  链式队列数据入队，以下3步：  将该数据元素用节点包裹，例如新节点名为enElem 与rear指针指向的节点建立逻辑关系，即执行rear-&amp;gt;next=enElem">
+<meta property="og:type" content="article">
+<meta property="og:title" content="链式队列及基本操作">
+<meta property="og:url" content="http://yoursite.com/2019/08/13/linkQueue/index.html">
+<meta property="og:site_name" content="项兴的个人博客">
+<meta property="og:description" content="链表节点是随用随取物理空间的，出队后需要释放内存空间。实时申请空间。 链表当有头节点时，头指针指向头节点，但头节点中数据域不存储值。有的是首元节点。 这里我们使用的链表有头节点，方便操作，第一个入队的数据元素存储在首元节点中。  链式队列数据入队，以下3步：  将该数据元素用节点包裹，例如新节点名为enElem 与rear指针指向的节点建立逻辑关系，即执行rear-&amp;gt;next=enElem">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/006fou7Wly1g5y3kfcnkdj30ac063glq.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5y3ko9diwj30hb0ah3z8.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/006fou7Wly1g5y3kuoxulj30gl0bv759.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5y41gbh14j30ev05zt8o.jpg">
+<meta property="og:updated_time" content="2019-08-13T08:13:31.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="链式队列及基本操作">
+<meta name="twitter:description" content="链表节点是随用随取物理空间的，出队后需要释放内存空间。实时申请空间。 链表当有头节点时，头指针指向头节点，但头节点中数据域不存储值。有的是首元节点。 这里我们使用的链表有头节点，方便操作，第一个入队的数据元素存储在首元节点中。  链式队列数据入队，以下3步：  将该数据元素用节点包裹，例如新节点名为enElem 与rear指针指向的节点建立逻辑关系，即执行rear-&amp;gt;next=enElem">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/006fou7Wly1g5y3kfcnkdj30ac063glq.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="项兴的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/wuticon.webp">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
+</head>
+</html>
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" title="图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档(目录)</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-linkQueue" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      链式队列及基本操作
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/08/13/linkQueue/" class="article-date">
+  <time datetime="2019-08-13T08:12:17.629Z" itemprop="datePublished">2019-08-13</time>
+</a>
+    
+    
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>链表节点是随用随取物理空间的，出队后需要释放内存空间。实时申请空间。</p>
+<p>链表当有头节点时，头指针指向头节点，但头节点中数据域不存储值。有的是首元节点。</p>
+<p>这里我们使用的链表有头节点，方便操作，第一个入队的数据元素存储在首元节点中。</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/006fou7Wly1g5y3kfcnkdj30ac063glq.jpg" alt="initQueue"></p>
+<p><strong>链式队列数据入队</strong>，以下3步：</p>
+<ol>
+<li>将该数据元素用节点包裹，例如新节点名为enElem</li>
+<li>与rear指针指向的节点建立逻辑关系，即执行rear-&gt;next=enElem</li>
+<li>最后移动rear指针指向该新节点，即rear=enElem</li>
+</ol>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5y3ko9diwj30hb0ah3z8.jpg" alt="enQueue"></p>
+<p><strong>链式队列数据出队</strong>，也分为3步操作：</p>
+<p>将队头元素做出队操作时，需提前判断队列中是否还有元素，若没有，要提示用户无法做出队操作，保证程序的健壮性（鲁棒性robust）</p>
+<ol>
+<li>通过top指针直接找到队头节点，创建一个新指针指向此即将出队的节点</li>
+<li>将p节点（即要出队的队头节点）从链表中删除；</li>
+<li>释放节点p，回收其所占的内存空间</li>
+</ol>
+<p><img src="https://wx4.sinaimg.cn/mw690/006fou7Wly1g5y3kuoxulj30gl0bv759.jpg" alt="deQueue"></p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">QNode</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;QNode; </span><br><span class="line"></span><br><span class="line"><span class="function">QNode* <span class="title">initQueue</span><span class="params">()</span></span>&#123;</span><br><span class="line">	QNode *<span class="built_in">queue</span>=(QNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QNode));</span><br><span class="line">	<span class="built_in">queue</span>-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">queue</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">QNode* <span class="title">enQueue</span><span class="params">(QNode *rear,<span class="keyword">int</span> data)</span></span>&#123;</span><br><span class="line">	QNode *enElem=(QNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QNode));</span><br><span class="line">	enElem-&gt;data=data;</span><br><span class="line">	enElem-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	<span class="comment">//使用尾插法向链队列中添加元素</span></span><br><span class="line">	rear-&gt;next=enElem;</span><br><span class="line">	rear=enElem;</span><br><span class="line">	<span class="keyword">return</span> rear; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">QNode* <span class="title">deQueue</span><span class="params">(QNode* top,QNode *rear)</span></span>&#123;</span><br><span class="line">	<span class="comment">//top指针的初始化在main()函数中 </span></span><br><span class="line">	<span class="keyword">if</span>(top-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n队列为空"</span>);</span><br><span class="line">		<span class="keyword">return</span> rear;</span><br><span class="line">	&#125;</span><br><span class="line">	QNode *p=top-&gt;next;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"出队元素：%d\n"</span>,p-&gt;data);</span><br><span class="line">	top-&gt;next=p-&gt;next;</span><br><span class="line">	<span class="keyword">if</span>(rear==p)&#123;</span><br><span class="line">		rear=top;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">free</span>(p);</span><br><span class="line">	<span class="keyword">return</span> rear;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	QNode *<span class="built_in">queue</span>,*top,*rear;</span><br><span class="line">	<span class="built_in">queue</span>=top=rear=initQueue();<span class="comment">//创建头节点</span></span><br><span class="line">	<span class="comment">//向链队列中添加节点，使用尾插法添加的同时，队尾指针需要指向链表的最后一个元素</span></span><br><span class="line">	rear=enQueue(rear,<span class="number">1</span>);</span><br><span class="line">	rear=enQueue(rear,<span class="number">2</span>);</span><br><span class="line">	rear=enQueue(rear,<span class="number">3</span>);</span><br><span class="line">	rear=enQueue(rear,<span class="number">4</span>);</span><br><span class="line">	<span class="comment">//入队完成，所有元素开始出队列</span></span><br><span class="line">	rear=deQueue(top,rear); </span><br><span class="line">	rear=deQueue(top,rear); </span><br><span class="line">	rear=deQueue(top,rear); </span><br><span class="line">	rear=deQueue(top,rear); </span><br><span class="line">	rear=deQueue(top,rear); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果：</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5y41gbh14j30ev05zt8o.jpg" alt="result"></p>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2019/08/13/orderQueue/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">顺序队列及其实现</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/lixian.png" title="图片来自网络"></img>
+    <h3 class="avatar-name">
+      
+        项兴
+      
+    </h3>
+    <p class="avatar-slogan">
+      武汉理工大学学生
+    </p>
+  </div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=200 height=86 src="//music.163.com/outchain/player?type=2&id=757567&auto=1&height=66"></iframe>
+</div>
+
+
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/13/linkQueue/">链式队列及基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/13/orderQueue/">顺序队列及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/13/stack/">数据结构-- 栈（顺序栈、链栈）</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/12/bitcoin_blockchain/">比特币与区块链</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/12/lineLink_BasOper/">双向链表基本操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://xiangxing1998.github.io/" title target='_blank'
+        >我的博客</a>
+      
+        <a style="display: block;" href="https://weibo.com/u/5724277716?is_all=1" title target='_blank'
+        >新浪微博</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2019 Xiangxing &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档(目录)</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>

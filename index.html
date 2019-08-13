@@ -55,7 +55,7 @@
       
         <a class="nav-item" href="/archives" title
         
-        >归档</a>
+        >归档(目录)</a>
       
     </nav>
   </div>
@@ -89,6 +89,113 @@
     <div class="article-content article-content-cloud" itemprop="articleBody">
       
         <p><img src="https://wx4.sinaimg.cn/mw690/006fou7Wly1g5vkv91hu1j30zk0k01kx.jpg" alt="huawei"></p>
+
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-linkQueue" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/linkQueue/">链式队列及基本操作</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/08/13/linkQueue/" class="article-date">
+  <time datetime="2019-08-13T08:12:17.629Z" itemprop="datePublished">2019-08-13</time>
+</a>
+    
+    
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>链表节点是随用随取物理空间的，出队后需要释放内存空间。实时申请空间。</p>
+<p>链表当有头节点时，头指针指向头节点，但头节点中数据域不存储值。有的是首元节点。</p>
+<p>这里我们使用的链表有头节点，方便操作，第一个入队的数据元素存储在首元节点中。</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/006fou7Wly1g5y3kfcnkdj30ac063glq.jpg" alt="initQueue"></p>
+<p><strong>链式队列数据入队</strong>，以下3步：</p>
+<ol>
+<li>将该数据元素用节点包裹，例如新节点名为enElem</li>
+<li>与rear指针指向的节点建立逻辑关系，即执行rear-&gt;next=enElem</li>
+<li>最后移动rear指针指向该新节点，即rear=enElem</li>
+</ol>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5y3ko9diwj30hb0ah3z8.jpg" alt="enQueue"></p>
+<p><strong>链式队列数据出队</strong>，也分为3步操作：</p>
+<p>将队头元素做出队操作时，需提前判断队列中是否还有元素，若没有，要提示用户无法做出队操作，保证程序的健壮性（鲁棒性robust）</p>
+<ol>
+<li>通过top指针直接找到队头节点，创建一个新指针指向此即将出队的节点</li>
+<li>将p节点（即要出队的队头节点）从链表中删除；</li>
+<li>释放节点p，回收其所占的内存空间</li>
+</ol>
+<p><img src="https://wx4.sinaimg.cn/mw690/006fou7Wly1g5y3kuoxulj30gl0bv759.jpg" alt="deQueue"></p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">QNode</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;QNode; </span><br><span class="line"></span><br><span class="line"><span class="function">QNode* <span class="title">initQueue</span><span class="params">()</span></span>&#123;</span><br><span class="line">	QNode *<span class="built_in">queue</span>=(QNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QNode));</span><br><span class="line">	<span class="built_in">queue</span>-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">queue</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">QNode* <span class="title">enQueue</span><span class="params">(QNode *rear,<span class="keyword">int</span> data)</span></span>&#123;</span><br><span class="line">	QNode *enElem=(QNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QNode));</span><br><span class="line">	enElem-&gt;data=data;</span><br><span class="line">	enElem-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	<span class="comment">//使用尾插法向链队列中添加元素</span></span><br><span class="line">	rear-&gt;next=enElem;</span><br><span class="line">	rear=enElem;</span><br><span class="line">	<span class="keyword">return</span> rear; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">QNode* <span class="title">deQueue</span><span class="params">(QNode* top,QNode *rear)</span></span>&#123;</span><br><span class="line">	<span class="comment">//top指针的初始化在main()函数中 </span></span><br><span class="line">	<span class="keyword">if</span>(top-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n队列为空"</span>);</span><br><span class="line">		<span class="keyword">return</span> rear;</span><br><span class="line">	&#125;</span><br><span class="line">	QNode *p=top-&gt;next;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"出队元素：%d\n"</span>,p-&gt;data);</span><br><span class="line">	top-&gt;next=p-&gt;next;</span><br><span class="line">	<span class="keyword">if</span>(rear==p)&#123;</span><br><span class="line">		rear=top;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">free</span>(p);</span><br><span class="line">	<span class="keyword">return</span> rear;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	QNode *<span class="built_in">queue</span>,*top,*rear;</span><br><span class="line">	<span class="built_in">queue</span>=top=rear=initQueue();<span class="comment">//创建头节点</span></span><br><span class="line">	<span class="comment">//向链队列中添加节点，使用尾插法添加的同时，队尾指针需要指向链表的最后一个元素</span></span><br><span class="line">	rear=enQueue(rear,<span class="number">1</span>);</span><br><span class="line">	rear=enQueue(rear,<span class="number">2</span>);</span><br><span class="line">	rear=enQueue(rear,<span class="number">3</span>);</span><br><span class="line">	rear=enQueue(rear,<span class="number">4</span>);</span><br><span class="line">	<span class="comment">//入队完成，所有元素开始出队列</span></span><br><span class="line">	rear=deQueue(top,rear); </span><br><span class="line">	rear=deQueue(top,rear); </span><br><span class="line">	rear=deQueue(top,rear); </span><br><span class="line">	rear=deQueue(top,rear); </span><br><span class="line">	rear=deQueue(top,rear); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果：</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5y41gbh14j30ev05zt8o.jpg" alt="result"></p>
+
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-orderQueue" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/orderQueue/">顺序队列及其实现</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/08/13/orderQueue/" class="article-date">
+  <time datetime="2019-08-13T07:30:53.908Z" itemprop="datePublished">2019-08-13</time>
+</a>
+    
+    
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>顺序队列，即采用顺序表模拟实现的顺序结构。</p>
+<p>底层实现使用数组，预先申请内存空间，即声明数组，为了满足先入先出的原则，（删除只需加个free()函数），还需要定义两个指针(top和rear)分别指向顺序队列的队头元素和队尾元素。数组的下标其实就像是指针一样，指向内存空间的某个具体位置。指针和数组的关系很巧妙。</p>
+<p>下面实现顺序队列的方法有些问题:</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/006fou7Wly1g5y269skhaj30oj0bhmyd.jpg" alt></p>
+<p><img src="https://wx4.sinaimg.cn/mw690/006fou7Wly1g5y26fj4ufj30m408i0t8.jpg" alt></p>
+<p>问题是：在经过入队和出队的操作后，这种情况下，top和rear指针都指向了a[4]的位置，顺序队列整体后移了：</p>
+<p>(1) 之前的存储空间将无法再被使用，造成了空间浪费</p>
+<p>(2) 若底层实现的数组申请的控件不够大，在入队出队-&gt;后移的过程中，可能直接造成数组a溢出，产生溢出错误。</p>
+<p><strong>为此想象了下面这样一种实现方法：</strong>可以不浪费存储空间，不会溢出</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/006fou7Wly1g5y27estcej30e00afmxh.jpg" alt="orderQueue"></p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> max 5<span class="comment">//表示顺序表申请的空间大小</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">enQueue</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> front,<span class="keyword">int</span> rear,<span class="keyword">int</span> data)</span></span>&#123;</span><br><span class="line">	<span class="comment">//添加判断语句，若rear超过max，则直接将其从a[0]开始存储，如果rear+1和front重合，则表示数组已满</span></span><br><span class="line">	<span class="keyword">if</span>((rear+<span class="number">1</span>)%max==front)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"空间已满"</span>);</span><br><span class="line">		<span class="keyword">return</span> rear;</span><br><span class="line">	&#125; </span><br><span class="line">	a[rear%max]=data;</span><br><span class="line">	rear++;</span><br><span class="line">	<span class="keyword">return</span> rear;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">deQueue</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> front,<span class="keyword">int</span> rear)</span></span>&#123;</span><br><span class="line">	<span class="comment">//如果front==rear，表示队列已空</span></span><br><span class="line">	<span class="keyword">if</span>(front==rear%max)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"队列为空"</span>);</span><br><span class="line">		<span class="keyword">return</span> front;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"出队元素：%d\n"</span>,a[front]);</span><br><span class="line">	<span class="comment">//front不再直接+1，而是+1后直接同max进行比较，如果=max，则直接跳转到a[0]</span></span><br><span class="line">	front=(front+<span class="number">1</span>)%max;</span><br><span class="line">	<span class="keyword">return</span> front; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[max];</span><br><span class="line">	<span class="keyword">int</span> front,rear;</span><br><span class="line">	<span class="comment">//设置头指针和队尾指针 ，当队列中没有元素时，队头和队尾指向同一块地址</span></span><br><span class="line">	front=rear=<span class="number">0</span>;</span><br><span class="line">	<span class="comment">//入队</span></span><br><span class="line">	rear=enQueue(a,front,rear,<span class="number">1</span>);</span><br><span class="line">	rear=enQueue(a,front,rear,<span class="number">2</span>);</span><br><span class="line">	rear=enQueue(a,front,rear,<span class="number">3</span>);</span><br><span class="line">	rear=enQueue(a,front,rear,<span class="number">4</span>);</span><br><span class="line">	<span class="comment">//出队</span></span><br><span class="line">	front=deQueue(a,front,rear);</span><br><span class="line">	<span class="comment">//再入队</span></span><br><span class="line">	rear=enQueue(a,front,rear,<span class="number">5</span>);</span><br><span class="line">	<span class="comment">//再出队</span></span><br><span class="line">	front=deQueue(a,front,rear);</span><br><span class="line">	<span class="comment">//再入队</span></span><br><span class="line">	rear=enQueue(a,front,rear,<span class="number">6</span>);</span><br><span class="line">	<span class="comment">//再出队</span></span><br><span class="line">	front=deQueue(a,front,rear);</span><br><span class="line">	front=deQueue(a,front,rear);</span><br><span class="line">	front=deQueue(a,front,rear);</span><br><span class="line">	front=deQueue(a,front,rear);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果：</p>
+<p><img src="https://wx4.sinaimg.cn/mw690/006fou7Wly1g5y2q7652oj30gq06p3yi.jpg" alt="result"></p>
 
       
     </div>
@@ -457,95 +564,6 @@
 </article>
 
   
-    <article id="post-Inter-Thread_1" class="article global-container article-type-post" itemscope itemprop="blogPost">
-  
-    <header class="article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/09/Inter-Thread_1/">线程通信（一）</a>
-    </h1>
-  
-
-    </header>
-  
-  <div class="article-meta">
-    <a href="/2019/08/09/Inter-Thread_1/" class="article-date">
-  <time datetime="2019-08-09T09:05:54.362Z" itemprop="datePublished">2019-08-09</time>
-</a>
-    
-    
-  </div>
-  
-
-  <div class="article-inner">
-    
-    <div class="article-content article-content-cloud" itemprop="articleBody">
-      
-        <p><strong><em>多线程之间的通信能避免对同一共享变量的争夺</em></strong></p>
-<h2 id="线程之间通信的两个基本问题："><a href="#线程之间通信的两个基本问题：" class="headerlink" title="线程之间通信的两个基本问题："></a>线程之间通信的两个基本问题：</h2><ul>
-<li><strong>多线程间同步</strong>：一个线程的处理结果，为另一个线程的输入。</li>
-<li><strong>多线程间互斥</strong>：两个线程需要访问同一资源，该资源在同一时刻只能被一个线程访问，这种关系称之为线程间对资源的互斥访问。</li>
-</ul>
-<p><strong>锁机制：防止某进程在访问资源时，其他进程也访问该资源</strong></p>
-<p>加锁保证共享资源当前只被一个线程访问。</p>
-<p>wait()、notify()、notifyAll()方法</p>
-<p>要保证当前线程正在访问资源，它有锁的拥有权，才能调用wait方法，释放它对锁的拥有权。</p>
-<p>对象—-对象监视器—-该对象的锁（对象有资源，上锁）—-该锁上的线程。</p>
-<p>IPC: 进程间通信（Inter-Process Communication）</p>
-<p>参考博客资源: </p>
-<p><a href="https://www.cnblogs.com/Wenxu/p/7979023.html" target="_blank" rel="noopener">1. 多进程之间的通信</a></p>
-<p><a href="https://www.cnblogs.com/mengyan/archive/2012/08/30/2664607.html" target="_blank" rel="noopener">2. 进程间通信(IPC)方法</a></p>
-<p><a href="https://www.cnblogs.com/Wenxu/p/7942757.html" target="_blank" rel="noopener">3. 线程的定义、状态、属性、简单实现线程</a></p>
-<p><a href="https://www.cnblogs.com/Wenxu/p/7944624.html" target="_blank" rel="noopener">4. 多线程之间的同步</a></p>
-
-      
-    </div>
-    
-  </div>
-  
-  
-</article>
-
-  
-    <article id="post-staticLinkTable_create" class="article global-container article-type-post" itemscope itemprop="blogPost">
-  
-    <header class="article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/09/staticLinkTable_create/">静态链表的创建</a>
-    </h1>
-  
-
-    </header>
-  
-  <div class="article-meta">
-    <a href="/2019/08/09/staticLinkTable_create/" class="article-date">
-  <time datetime="2019-08-09T07:54:31.112Z" itemprop="datePublished">2019-08-09</time>
-</a>
-    
-    
-  </div>
-  
-
-  <div class="article-inner">
-    
-    <div class="article-content article-content-cloud" itemprop="articleBody">
-      
-        <div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">//优点：存取速度高效，通过下标来直接存储</span><br><span class="line">//缺点：1.插入和删除比较慢，2.不可以增长长度 </span><br><span class="line">//比如：插入或者删除一个元素时，整个表需要遍历移动元素来重新排一次顺序 </span><br><span class="line"></span><br><span class="line">//链表存储是在程序运行过程中动态的分配空间，只要存储器还有空间，就不会发生存储溢出问题，随用随取，随机存储 </span><br><span class="line">//优点：插入和删除速度快，保留原有的物理顺序，比如：插入或者删除一个元素时，只需要改变指针指向即可</span><br><span class="line">//缺点：查找速度慢，因为查找时，需要循环链表访问</span><br><span class="line"></span><br><span class="line">//从它们的存储优缺点来看，各自有各自的使用场景，比如：频繁的查找却很少的插入和删除操作可以用顺序表存储，如果频繁的插入和删除操作很少的查询就可以使用链表存储</span><br><span class="line">//顺序表可快速访问元素，链表可快速增加或删除元素</span><br><span class="line"></span><br><span class="line">//而静态链表，兼顾了顺序表和链表的优点于一身</span><br><span class="line">//使用静态链表存储数据，数据会全部存储在数组中（和顺序表一样），但存储位置是随机的，数据之间“一对一”的逻辑关系通过一个整型变量（称为“游标”，和指针功能类似）维持（和链表类似）</span><br><span class="line">//a[0]默认不存储元素，是备用链表表头，若静态链表中数组下标为0的位置上存有数据，则证明数组已满</span><br><span class="line"></span><br><span class="line">//静态链表包含以下两部分信息：</span><br><span class="line">//数据域</span><br><span class="line">//游标：游标变量其实就是数组下标，表示直接后继元素所在数组中的位置 </span><br><span class="line"></span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#define maxSize 6</span><br><span class="line"></span><br><span class="line">typedef struct&#123;</span><br><span class="line">	int data;//数据域 </span><br><span class="line">	int cur;//游标 </span><br><span class="line">&#125;staLink;</span><br><span class="line"> </span><br><span class="line">//将结构体数组中所有分量链接到备用链表中</span><br><span class="line">void reserveArr(staLink *array);</span><br><span class="line">//初始化静态链表</span><br><span class="line">int initArr(staLink *array);</span><br><span class="line">//输出函数</span><br><span class="line">void displayArr(staLink *array,int body);</span><br><span class="line">//从备用链表上摘下空闲节点的函数</span><br><span class="line">int mallocArr(staLink *array);</span><br><span class="line">int main()&#123;</span><br><span class="line">	staLink array[maxSize];</span><br><span class="line">	int body=initArr(array);</span><br><span class="line">	printf(&quot;静态链表为：\n&quot;);</span><br><span class="line">	displayArr(array,body);</span><br><span class="line">	return 0;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">//创建备用链表</span><br><span class="line">void reserveArr(staLink *array)&#123;</span><br><span class="line">	for(int i=0;i&lt;maxSize;i++)&#123;</span><br><span class="line">		array[i].cur = i+1;//将每个数组分量链接到一起 </span><br><span class="line">	&#125;</span><br><span class="line">	array[maxSize-1].cur = 0;//链表最后一个节点的游标值为0 </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">//提取分配空间</span><br><span class="line">int mallocArr(staLink *array)&#123;</span><br><span class="line">	//若备用链表非空，则返回分配的节点下标，否则返回0（当分配最后一个节点时，该节点的游标值为0）</span><br><span class="line">	//改备用链表头节点的游标值</span><br><span class="line">	int i=array[0].cur;//分配的节点的数组下标 </span><br><span class="line">	if(array[0].cur)&#123;</span><br><span class="line">		array[0].cur = array[i].cur;//分配了备用链表的一个节点出来，备用链表头节点a[0]游标开始指向下一个备用链表节点 </span><br><span class="line">	&#125; </span><br><span class="line">	return i;</span><br><span class="line">&#125; //这时候array[i]就被提取出来了</span><br><span class="line"></span><br><span class="line">//初始化静态链表</span><br><span class="line">int initArr(staLink *array)&#123;</span><br><span class="line">	reserveArr(array);</span><br><span class="line">	int body=mallocArr(array);//根据前面的reserve()，body=1 </span><br><span class="line">	//声明一个变量，把它当指针使，指向链表的最后一个节点，因为链表为空，所以和头节点重合</span><br><span class="line">	int tempBody = body;</span><br><span class="line">	for(int i=1;i&lt;4;i++)&#123;//数据链表表头没有给数据域赋值 </span><br><span class="line">		int j=mallocArr(array);//从备用链表中拿出空闲的节点 </span><br><span class="line">		array[tempBody].cur = j;//将申请的空弦节点链接在链表的最后一个节点后面，第一次循环时，是链接在头节点a[1]的后面 </span><br><span class="line">		array[j].data = i;//对新申请的节点的数据域初始化</span><br><span class="line">		tempBody = j ;//将指向链表最后一个节点的指针后移，这个节点的游标为0，指向a[0] </span><br><span class="line">	&#125; </span><br><span class="line">	array[tempBody].cur = 0;//新的链表最后一个节点的指针设置为0</span><br><span class="line">	return body;//body为数据链表的表头下标 </span><br><span class="line">&#125; </span><br><span class="line">//定义一个指针变量array，指向数组的存储控件，其实，数组名是个地址 </span><br><span class="line">void displayArr(staLink *array,int body)&#123;</span><br><span class="line">	int tempBody = body;//tempBody准备做遍历使用</span><br><span class="line">	while(array[tempBody].cur) &#123;</span><br><span class="line">		printf(&quot;(%d,%d) &quot;,array[tempBody].data,array[tempBody].cur);</span><br><span class="line">		tempBody = array[tempBody].cur;</span><br><span class="line">	&#125;</span><br><span class="line">	//输出静态链表最后一个数据节点，该节点可能不是静态链表的最后一个节点，但是数据链表的最后一个，还有备用链表部分</span><br><span class="line">	printf(&quot;(%d,%d)\n&quot;,array[tempBody].data,array[tempBody].cur);</span><br><span class="line">&#125;</span><br><span class="line">//顺序表存储是将数据元素放到一块连续的内存存储空间，存取效率高，速度快。但是不可以动态增加长度</span><br></pre></td></tr></table></figure></div>
-
-<p><strong>在输出结果中，对a[1]数据域并没有赋值，却出现一个程序中没体现的值。</strong></p>
-
-      
-    </div>
-    
-  </div>
-  
-  
-</article>
-
-  
 
 
   <nav id="page-nav">
@@ -598,6 +616,14 @@
       <ul>
         
           <li>
+            <a href="/2019/08/13/linkQueue/">链式队列及基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/13/orderQueue/">顺序队列及其实现</a>
+          </li>
+        
+          <li>
             <a href="/2019/08/13/stack/">数据结构-- 栈（顺序栈、链栈）</a>
           </li>
         
@@ -607,14 +633,6 @@
         
           <li>
             <a href="/2019/08/12/lineLink_BasOper/">双向链表基本操作</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/12/lineLink_create/">双向链表及其创建（C语言）</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/12/loopLink/">循环链表实现约瑟夫环</a>
           </li>
         
       </ul>
@@ -671,7 +689,7 @@ document.body.write(script);
   
     <a href="/" class="mobile-nav-link">首页</a>
   
-    <a href="/archives" class="mobile-nav-link">归档</a>
+    <a href="/archives" class="mobile-nav-link">归档(目录)</a>
   
   <div class="mobile-nav-img  mobile-nav-bottom"></div>
 </nav>    
