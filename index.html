@@ -99,6 +99,109 @@
 </article>
 
   
+    <article id="post-stack" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/stack/">数据结构-- 栈（顺序栈、链栈）</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/08/13/stack/" class="article-date">
+  <time datetime="2019-08-13T01:25:28.067Z" itemprop="datePublished">2019-08-13</time>
+</a>
+    
+    
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>栈是一种只能从表的一端存取数据且遵循“先进后出”原则的先行存储结构。也是用来存储逻辑关系为“一对一”的线性存储结构。</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5xsu70msnj30np09pwey.jpg" alt="stack"></p>
+<p>两种操作：压栈(push)和弹栈(pop)</p>
+<p>栈是一种“特殊”的线性存储结构，具体实现有以下两种方式：</p>
+<p>(1) <strong>顺序栈</strong>：采用顺序存储结构，<strong>底层采用的是数组</strong></p>
+<p>(2) <strong>链栈</strong>：采用链式存储结构实现，<strong>底层采用链表</strong></p>
+<p>两种实现方式的区别，仅限于数据元素在实际物理空间上存放的相对位置。</p>
+<p>举例说一下栈的应用，当你在浏览器打开一个页面时，继续在该页面点击可进入的链接，当你使用浏览器的“回退”功能时，会返回上一个界面，其实这就是一个压栈和弹栈的过程。</p>
+<h2 id="一、顺序栈的基本操作"><a href="#一、顺序栈的基本操作" class="headerlink" title="一、顺序栈的基本操作"></a>一、顺序栈的基本操作</h2><p>通过一个top值和一个数组指针，数组名为只想该数组a[0]的地址。</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="comment">//元素elem进栈</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> top,<span class="keyword">int</span> elem)</span></span>&#123;<span class="comment">//其实数组名是数组的管理者，这句话意思是数组名就像是一个指针，它代表数组的地址（首元素）</span></span><br><span class="line">	a[++top]=elem;<span class="comment">//等价于先执行++top，对top自加1，再执行a[top]=elem</span></span><br><span class="line"><span class="comment">//	int i=1;</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"入栈元素：%d\n"</span>,a[top]);</span><br><span class="line"><span class="comment">//	i++;//这样不行，因为不给返回值的话，每次调用都是从1开始，调用完一次，i它的生存期就没了 </span></span><br><span class="line">	<span class="keyword">return</span> top; </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//数据元素出栈</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> top)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(top==<span class="number">-1</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"空栈"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"弹栈元素：%d\n"</span>,a[top]);</span><br><span class="line">	top--;</span><br><span class="line">	<span class="keyword">return</span> top;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">100</span>];<span class="comment">//顺序存储结构，先申请空间，虽静态链表也如此，存储在数组中，只不过位置随机 </span></span><br><span class="line">	<span class="keyword">int</span> top=<span class="number">-1</span>;</span><br><span class="line">	top=push(a,top,<span class="number">1</span>);<span class="comment">//a[0]=1,运行了push函数体了，这个结果已经有了，再将函数返回值赋值给top </span></span><br><span class="line">	top=push(a,top,<span class="number">2</span>);</span><br><span class="line">	top=push(a,top,<span class="number">3</span>);</span><br><span class="line">	top=push(a,top,<span class="number">4</span>);</span><br><span class="line">	top=pop(a,top);</span><br><span class="line">	top=pop(a,top);</span><br><span class="line">	top=pop(a,top);</span><br><span class="line">	top=pop(a,top);</span><br><span class="line">	top=pop(a,top);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果：</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5xtof1gupj30ka06sglo.jpg" alt="result"></p>
+<h2 id="二、链栈的基本操作"><a href="#二、链栈的基本操作" class="headerlink" title="二、链栈的基本操作"></a>二、链栈的基本操作</h2><p>链栈元素入栈</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/006fou7Wly1g5xtyntvppj30fy05iq3d.jpg" alt="linkStackPush"></p>
+<p>链栈元素出栈</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/006fou7Wly1g5xtz1juthj30og05jt99.jpg" alt="linkStackPop"></p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在该用到的链表中，头指针指向首元节点</span></span><br><span class="line"><span class="comment">//将链表头部作为栈顶的一端</span></span><br><span class="line"><span class="comment">//链表的头部作为栈顶，意味着：</span></span><br><span class="line"><span class="comment">//1. 在实现数据“入栈”操作时，需要将数据从链表的头部插入 </span></span><br><span class="line"><span class="comment">//2. 在实现数据“出栈”操作时，需要删除链表头部的首元节点</span></span><br><span class="line"><span class="comment">//因此，链栈实际上就是一个只能采用头插法插入或删除数据的链表。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//通过采用头插法操作数据的单链表实现了链栈结构 </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">lineStack</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;lineStack;</span><br><span class="line"></span><br><span class="line"><span class="function">lineStack* <span class="title">push</span><span class="params">(lineStack *<span class="built_in">stack</span>,<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">	lineStack *line=(lineStack*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(lineStack));</span><br><span class="line">	line-&gt;data=a;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"入栈元素：%d"</span>,line-&gt;data);</span><br><span class="line">	line-&gt;next=<span class="built_in">stack</span>;</span><br><span class="line">	<span class="built_in">stack</span>=line;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"栈顶元素：%d\n"</span>,<span class="built_in">stack</span>-&gt;data);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">stack</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">lineStack *<span class="title">pop</span><span class="params">(lineStack *<span class="built_in">stack</span>)</span></span>&#123;<span class="comment">//stack是头指针，指向首元节点 </span></span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">stack</span>)&#123;</span><br><span class="line">		lineStack *p=<span class="built_in">stack</span>;</span><br><span class="line">		<span class="built_in">stack</span>=<span class="built_in">stack</span>-&gt;next;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"弹栈元素：%d"</span>,p-&gt;data);</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">stack</span>)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"栈顶元素：%d\n"</span>,<span class="built_in">stack</span>-&gt;data);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"栈已空\n"</span>); </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"栈内没有元素"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">stack</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">stack</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	lineStack *<span class="built_in">stack</span>=<span class="literal">NULL</span>;<span class="comment">//无效 ,空的 </span></span><br><span class="line">	<span class="built_in">stack</span>=push(<span class="built_in">stack</span>,<span class="number">1</span>);</span><br><span class="line">	<span class="built_in">stack</span>=push(<span class="built_in">stack</span>,<span class="number">2</span>);</span><br><span class="line">	<span class="built_in">stack</span>=push(<span class="built_in">stack</span>,<span class="number">3</span>);</span><br><span class="line">	<span class="built_in">stack</span>=push(<span class="built_in">stack</span>,<span class="number">4</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n对单链表使用头插法实现链栈存储结构成功!!!\n\n"</span>);</span><br><span class="line">	<span class="built_in">stack</span>=pop(<span class="built_in">stack</span>);</span><br><span class="line">	<span class="built_in">stack</span>=pop(<span class="built_in">stack</span>);</span><br><span class="line">	<span class="built_in">stack</span>=pop(<span class="built_in">stack</span>);</span><br><span class="line">	<span class="built_in">stack</span>=pop(<span class="built_in">stack</span>);</span><br><span class="line">	<span class="built_in">stack</span>=pop(<span class="built_in">stack</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果：</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/006fou7Wly1g5xunq9r30j30gy086aa9.jpg" alt="result"></p>
+
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-bitcoin_blockchain" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/12/bitcoin_blockchain/">比特币与区块链</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/08/12/bitcoin_blockchain/" class="article-date">
+  <time datetime="2019-08-12T10:05:49.558Z" itemprop="datePublished">2019-08-12</time>
+</a>
+    
+    
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h2 id="一、比特币及区块链的发展历史。"><a href="#一、比特币及区块链的发展历史。" class="headerlink" title="一、比特币及区块链的发展历史。"></a>一、比特币及区块链的发展历史。</h2><p>比特币预计2140年发行完毕，总量2100万枚，由日本人中本聪发明。</p>
+<p>区块链是比特币的底层技术，矿工退出获导致区块链上节点下降。</p>
+<p>中本聪—《比特币-一种点对点的电子现金系统》，特点：去中心化，解决了在没有中心机构（如国家银行）的情况下，总量恒定的数字资产的发行和流通问题。</p>
+<p>比特币转账信息公开透明，共同管理，被全网记录。</p>
+<p>比特币白皮书的问世，也标志着底层技术区块链的诞生。</p>
+<p>在比特币白皮书（中本聪发布）问世的三个月后，2009年1月4日，中本聪在芬兰赫尔辛基的一个小型服务器上，创建了第一个区块链的区块（创世区块），并获得了50枚比特币的奖励。</p>
+<p>谁能动用创世区块里的比特币，谁就是中本聪。</p>
+<p>密码朋克（cypherpunk）邮件组织，一套加密的电子邮件系统，白皮书最早发布于此。会员约1400人。</p>
+<p>激励矿工记账，区块链就像一个账本，每个区块是这个帐本中的一页，每10分钟，全体矿工计算一道问题，最先算出来的矿工获得一页的记账权，记账完成后，系统会自动发放比特币的奖励，起初是一次发放50个比特币，但根据中本聪的设计，每记21万页账，系统单次发放的奖励就会减少一半，预计2140年结束发放，所以，挖矿要趁早。</p>
+<p>2010.5.22，一位美国程序员用10000个比特币换了两个披萨，这一天也被纪念为比特币披萨日，好傻哦，按现在的比特币价格，这两个披萨值3亿人民币。</p>
+<p>中本聪之后—-加文.安德烈森，比特币核心开发团队成员，优化比特币系统，创立了Bitcoin Foundation。</p>
+<p>比特币水龙头网站(bitcoin faucet)，第一个是加文创建的，免费发放一些比特币，用来让更多人知道比特币。</p>
+
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
     <article id="post-lineLink_BasOper" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
@@ -443,76 +546,6 @@
 </article>
 
   
-    <article id="post-LinkTable_BasOper" class="article global-container article-type-post" itemscope itemprop="blogPost">
-  
-    <header class="article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/09/LinkTable_BasOper/">数据结构---链表的基本操作</a>
-    </h1>
-  
-
-    </header>
-  
-  <div class="article-meta">
-    <a href="/2019/08/09/LinkTable_BasOper/" class="article-date">
-  <time datetime="2019-08-09T01:59:26.150Z" itemprop="datePublished">2019-08-09</time>
-</a>
-    
-    
-  </div>
-  
-
-  <div class="article-inner">
-    
-    <div class="article-content article-content-cloud" itemprop="articleBody">
-      
-        <h2 id="—增加、删除、查找、修改节点"><a href="#—增加、删除、查找、修改节点" class="headerlink" title="—增加、删除、查找、修改节点"></a>—增加、删除、查找、修改节点</h2><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> elem;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Link</span>* <span class="title">next</span>;</span></span><br><span class="line">&#125;Link;</span><br><span class="line"></span><br><span class="line"><span class="function">Link* <span class="title">initLink</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">//链表插入的函数，参数表中，p是链表（头指针，即可找到链表中所有元素），elem是插入节点的数据域，add是插入的位置 </span></span><br><span class="line"><span class="function">Link* <span class="title">insertElem</span><span class="params">(Link *p,<span class="keyword">int</span> elem,<span class="keyword">int</span> add)</span></span>;<span class="comment">//先声明，再在下面进行初始化定义</span></span><br><span class="line"><span class="comment">//删除节点的函数，参数表中，p代表要操作的链表（的头指针），add代表删除节点的位置</span></span><br><span class="line"><span class="function">Link* <span class="title">delElem</span><span class="params">(Link *p,<span class="keyword">int</span> add)</span></span>;<span class="comment">//表示返回值是一个指针类型，指向一个地址 </span></span><br><span class="line"><span class="comment">//查找节点的函数，elem为目标节点的数据域的值</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">selectElem</span><span class="params">(Link *p,<span class="keyword">int</span> elem)</span></span>;</span><br><span class="line"><span class="comment">//更新节点的函数，newElem为新的数据域的值</span></span><br><span class="line"><span class="function">Link* <span class="title">amendElem</span><span class="params">(Link *p,<span class="keyword">int</span> add,<span class="keyword">int</span> newElem)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">(Link *p)</span></span>; </span><br><span class="line"></span><br><span class="line"><span class="function">Link* <span class="title">initLink</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Link *p=(Link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Link));<span class="comment">//创建一个头节点，p为头指针</span></span><br><span class="line">	Link *temp=p;<span class="comment">//声明一个指针指向头节点，用于遍历列表</span></span><br><span class="line">	<span class="comment">//生成链表</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">		Link *a=(Link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Link));<span class="comment">//物理空间随用随取，随机存储</span></span><br><span class="line">		a-&gt;elem=i;</span><br><span class="line">		a-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">		temp-&gt;next=a;</span><br><span class="line">		temp=a;<span class="comment">//temp=temp-&gt;next; </span></span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> p;<span class="comment">//返回一个结构体类型指针 </span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">(Link *p)</span></span>&#123;</span><br><span class="line">	Link *temp=p;<span class="comment">//将temp重新指向头节点</span></span><br><span class="line">	<span class="comment">//只要temp指针指向的节点的next不是NULL,就执行输出语句</span></span><br><span class="line">	<span class="keyword">while</span>(temp-&gt;next)&#123;</span><br><span class="line">		temp=temp-&gt;next;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>,temp-&gt;elem);</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//本程序介绍对链表的一些基本操作，包括对链表中数据的添加、删除、查找和更改，注：通过头指针可找到链表 </span></span><br><span class="line"><span class="comment">//链表插入元素的思想是这样的：</span></span><br><span class="line"><span class="comment">//1.将新节点的next指针指向插入位置后的节点</span></span><br><span class="line"><span class="comment">//2.将插入位置前节点的next指针指向插入节点</span></span><br><span class="line"><span class="comment">//注：必须先1后2，不然会导致插入位置后续的部分链表丢失。</span></span><br><span class="line"></span><br><span class="line"><span class="function">Link* <span class="title">insertElem</span><span class="params">(Link*p,<span class="keyword">int</span> elem,<span class="keyword">int</span> add)</span></span>&#123;</span><br><span class="line">	Link *temp=p;<span class="comment">//创建临时节点，p为头指针，头节点地址</span></span><br><span class="line">	<span class="comment">//add为1时，表示插入的节点位置为作为首元节点，根本不进入for循环，首元节点的位置为第一个位置 </span></span><br><span class="line">	<span class="comment">//首先要找到插入位置的上一个节点作为临时节点</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;add;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(temp==<span class="literal">NULL</span>)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"插入位置无效\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> p;<span class="comment">//返回链表 </span></span><br><span class="line">		&#125;</span><br><span class="line">		temp=temp-&gt;next;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="comment">//创建插入节点c</span></span><br><span class="line">	Link* c = (Link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Link));</span><br><span class="line">	c-&gt;elem=elem;</span><br><span class="line">	<span class="comment">//向链表中插入节点，这个节点已经有了自己的物理空间，现在插入到链表中</span></span><br><span class="line">	c-&gt;next=temp-&gt;next;</span><br><span class="line">	temp-&gt;next=c;</span><br><span class="line">	<span class="keyword">return</span> p; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//链表删除元素，分为两步： </span></span><br><span class="line"><span class="comment">//1.将节点从链表中摘下来 </span></span><br><span class="line"><span class="comment">//2.手动释放掉节点，回收被节点占用的存储空间</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//参数表中，p为原链表，即头指针，add为要删除元素的值 </span></span><br><span class="line"><span class="function">Link* <span class="title">delElem</span><span class="params">(Link *p,<span class="keyword">int</span> add)</span></span>&#123;</span><br><span class="line">	Link *temp = p;</span><br><span class="line">	<span class="comment">//temp指向被删除节点的上一个节点</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;add;i++) &#123;</span><br><span class="line">		temp=temp-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	Link *del = temp-&gt;next;<span class="comment">//单独设置一个指针指向被删除节点，以防丢失，以防找不到，还要释放这个内存，JVM调度硬件资源。</span></span><br><span class="line">	temp-&gt;next = del-&gt;next;<span class="comment">//删除某个节点的方法就是更改前一个节点的指针域</span></span><br><span class="line">	<span class="built_in">free</span>(del);<span class="comment">//手动释放该节点，以防内存泄漏</span></span><br><span class="line">	<span class="keyword">return</span> p; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//链表查找元素</span></span><br><span class="line"><span class="comment">//方法：从表头依次遍历表中节点，用被查找元素与各节点数据域中存储的数据元素进行比对，直至比对成功或遍历至列表最末端的NULL(失败的标志)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//p为原列表，elem表示被查找元素</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">selectElem</span><span class="params">(Link *p,<span class="keyword">int</span> elem)</span></span>&#123;</span><br><span class="line">	<span class="comment">//新建一个指针t，初始化为头指针p，同为指向头节点</span></span><br><span class="line">	Link *t = p;</span><br><span class="line">	<span class="keyword">int</span> i=<span class="number">1</span>;</span><br><span class="line">	<span class="comment">//由于头节点的存在，因此while中的判断为t-&gt;next</span></span><br><span class="line">	<span class="keyword">while</span>(t-&gt;next)&#123;</span><br><span class="line">		t=t-&gt;next;</span><br><span class="line">		<span class="keyword">if</span>(t-&gt;elem==elem)&#123;</span><br><span class="line">			<span class="keyword">return</span> i;</span><br><span class="line">		&#125;</span><br><span class="line">		i++ ;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="comment">//程序执行至此处 ，表示查找失败</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">//链表更新元素，虽然物理空间是随机存储的，但逻辑关系还是一对一的 </span></span><br><span class="line"><span class="comment">//方法：通过遍历找到存储该元素的节点，对节点中的数据域做更改操作即可。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//更新函数，其中,add表示要更改的节点，第几个节点，newElem为新的数据域的值</span></span><br><span class="line"><span class="function">Link* <span class="title">amendElem</span><span class="params">(Link *p,<span class="keyword">int</span> add,<span class="keyword">int</span> newElem)</span></span>&#123;</span><br><span class="line">	Link *temp = p;</span><br><span class="line">	temp = temp-&gt;next;<span class="comment">//在遍历之前，temp指向首元节点</span></span><br><span class="line">	<span class="comment">//遍历到被删除节点</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;add;i++)&#123;</span><br><span class="line">		temp = temp-&gt;next;</span><br><span class="line">	&#125; </span><br><span class="line">	temp-&gt;elem= newElem;</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//初始化链表(1,2,3,4)</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"初始化链表为:\n"</span>);</span><br><span class="line">	Link *p=initLink();</span><br><span class="line">	display(p);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"在第4的位置插入元素5:\n"</span>);</span><br><span class="line">	p=insertElem(p,<span class="number">5</span>,<span class="number">4</span>);</span><br><span class="line">	display(p);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"删除元素3:\n"</span>);</span><br><span class="line">	p=delElem(p,<span class="number">3</span>);<span class="comment">//p为头指针指向的物理空间</span></span><br><span class="line">	display(p);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"查找元素2的位置为:\n"</span>);</span><br><span class="line">	<span class="keyword">int</span> address = selectElem(p,<span class="number">2</span>);</span><br><span class="line">	<span class="keyword">if</span>(address == <span class="number">-1</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"没有该元素"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"元素2的位置为:%d\n"</span>,address);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"更改第3个节点位置上的数据为7:\n"</span>);</span><br><span class="line">	p=amendElem(p,<span class="number">3</span>,<span class="number">7</span>);</span><br><span class="line">	display(p);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-      
-    </div>
-    
-  </div>
-  
-  
-</article>
-
-  
-    <article id="post-LinkTable_create" class="article global-container article-type-post" itemscope itemprop="blogPost">
-  
-    <header class="article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/09/LinkTable_create/">数据结构---链表的初始化（C）</a>
-    </h1>
-  
-
-    </header>
-  
-  <div class="article-meta">
-    <a href="/2019/08/09/LinkTable_create/" class="article-date">
-  <time datetime="2019-08-09T01:57:56.417Z" itemprop="datePublished">2019-08-09</time>
-</a>
-    
-    
-  </div>
-  
-
-  <div class="article-inner">
-    
-    <div class="article-content article-content-cloud" itemprop="articleBody">
-      
-        <div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="comment">//链表中节点的结构//本程序示范如何创建一个没有头节点，头指针指向首元节点的链表 </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> elem;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Link</span> *<span class="title">next</span></span></span><br><span class="line"><span class="class">&#125;<span class="title">Link</span>;</span></span><br><span class="line"><span class="comment">//初始化链表的函数</span></span><br><span class="line"><span class="function">Link* <span class="title">initLink</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">//用于输出链表的函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">(Link *p)</span></span>;<span class="comment">//由头指针就可确定该链表的位置</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//初始化链表（1，2，3，4）</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"初始化链表为:\n"</span>);</span><br><span class="line">	Link *p=initLink();</span><br><span class="line">	display(p);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function">Link* <span class="title">initLink</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Link *p = <span class="literal">NULL</span>;<span class="comment">//创建头指针</span></span><br><span class="line">	Link *temp = (Link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Link));<span class="comment">//创建首元节点</span></span><br><span class="line">	<span class="comment">//首元节点先初始化</span></span><br><span class="line">	temp-&gt;elem = <span class="number">1</span>;</span><br><span class="line">	temp-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">	p = temp;<span class="comment">//头指针指向首元节点</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">		Link *a=(Link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Link));</span><br><span class="line">		a-&gt;elem=i;</span><br><span class="line">		a-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">		temp-&gt;next=a;</span><br><span class="line">		temp=temp-&gt;next;<span class="comment">//temp=a;指向的物理空间 </span></span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> p;	 </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在initLink()中，即初始化的链表中，头指针指向首元节点了，因此一开始它不为空</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">(Link *p)</span></span>&#123;</span><br><span class="line">	Link* temp = p;<span class="comment">//将temp指针重新指向头节点</span></span><br><span class="line">	<span class="comment">//只要temp指针指向的节点的next不是NULL，就执行while循环。</span></span><br><span class="line">	<span class="keyword">while</span>(temp)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>,temp-&gt;elem);</span><br><span class="line">		temp=temp-&gt;next;<span class="comment">//地址空间 </span></span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-      
-    </div>
-    
-  </div>
-  
-  
-</article>
-
-  
 
 
   <nav id="page-nav">
@@ -565,6 +598,14 @@
       <ul>
         
           <li>
+            <a href="/2019/08/13/stack/">数据结构-- 栈（顺序栈、链栈）</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/12/bitcoin_blockchain/">比特币与区块链</a>
+          </li>
+        
+          <li>
             <a href="/2019/08/12/lineLink_BasOper/">双向链表基本操作</a>
           </li>
         
@@ -574,14 +615,6 @@
         
           <li>
             <a href="/2019/08/12/loopLink/">循环链表实现约瑟夫环</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/11/Thread01/">Java线程实现方式(一)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/11/fromWutToHuaWei/">勉成国器</a>
           </li>
         
       </ul>
