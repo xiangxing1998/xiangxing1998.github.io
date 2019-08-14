@@ -99,20 +99,20 @@
 </article>
 
   
-    <article id="post-stringMatchingAlgo" class="article global-container article-type-post" itemscope itemprop="blogPost">
+    <article id="post-BF_KMP" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
       
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/14/stringMatchingAlgo/">串模式匹配算法---BF算法和KMP算法</a>
+      <a class="article-title" href="/2019/08/14/BF_KMP/">串模式匹配算法---BF算法和KMP算法</a>
     </h1>
   
 
     </header>
   
   <div class="article-meta">
-    <a href="/2019/08/14/stringMatchingAlgo/" class="article-date">
+    <a href="/2019/08/14/BF_KMP/" class="article-date">
   <time datetime="2019-08-14T07:30:47.025Z" itemprop="datePublished">2019-08-14</time>
 </a>
     
@@ -140,10 +140,9 @@
 <p>模式串从主串的第一个字符开始匹配，每匹配失败，主串中记录匹配进度的指针 i 都要进行 i-j+1 的回退操作（这个过程称为“指针回溯”），同时模式串向后移动一个字符的位置。一次次的循环，直到匹配成功或者程序结束。</p>
 <p>“KMP”算法相比于”BF”算法，优势在于：</p>
 <ol>
-<li>在保证指针 i 不回溯的前提下，当匹配失败时，让模式串向右移动最大的距离</li>
-<li>并且可以在<code>O(n+m)</code>的时间数量级上完成对串的模式匹配操作</li>
-</ol>
-<blockquote>
+<li><p>在保证指针 i 不回溯的前提下，当匹配失败时，让模式串向右移动最大的距离</p>
+</li>
+<li><p>并且可以在<code>O(n+m)</code>的时间数量级上完成对串的模式匹配操作</p>
 <p>在模式串和主串匹配时，各有一个指针指向当前进行匹配的字符（主串中是指针 i ，模式串中是指针 j ），在保证 i 指针不回溯的前提下，如果想实现功能，就只能让 j 指针回溯。</p>
 <p>j 指针回溯的距离，就相当于模式串向右移动的距离。 j 指针回溯的越多，说明模式串向右移动的距离越长。</p>
 <p>计算模式串向右移动的距离，就可以转化成：当某字符匹配失败后， j 指针回溯的位置。</p>
@@ -151,7 +150,8 @@
 <p><strong>模式串中的每个字符所对应 j 指针回溯的位置，可以通过算法得出，得到的结果相应地存储在一个<a href="http://data.biancheng.net/view/181.html" target="_blank" rel="noopener">数组</a>中（默认数组名为 next ）。</strong></p>
 <p>计算方法是：对于模式串中的某一字符来说，提取它前面的字符串，分别从字符串的两端查看连续相同的字符串的个数，在其基础上 +1 ，结果就是该字符对应的值。</p>
 <p>每个模式串的第一个字符对应的值为 0 ，第二个字符对应的值为 1 。</p>
-</blockquote>
+</li>
+</ol>
 <p><strong>j移到下一个next的位置，i不动，再开始匹配，匹配了的部分i后移，遇到不匹配的部分，i不动，j再回溯回去，找下一个next的位置，比如第一个a的位置，再第二个a的位置，再第三个a的位置。</strong></p>
 <p><img src="https://wx4.sinaimg.cn/mw690/006fou7Wgy1g5zaj4tvjvj30fk0ck74y.jpg" alt="KMP"></p>
 <p><img src="https://wx4.sinaimg.cn/mw690/006fou7Wgy1g5zajhar1cj30er0bv0td.jpg" alt="KMP"></p>
@@ -634,7 +634,7 @@
       <ul>
         
           <li>
-            <a href="/2019/08/14/stringMatchingAlgo/">串模式匹配算法---BF算法和KMP算法</a>
+            <a href="/2019/08/14/BF_KMP/">串模式匹配算法---BF算法和KMP算法</a>
           </li>
         
           <li>
