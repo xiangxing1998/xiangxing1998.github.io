@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>字符串存储结构 | 项兴的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="数据结构中，字符串要单独用一种存储结构来存储，称为串存储结构。 存储一个字符串，有以下3种具体存储结构：  定长顺序存储：实际上就是用普通数组（静态数组）存储。例如C语言中char a[20] = “data.biancheng.net” 堆分配存储：用动态数组存储字符串 块链存储：用链表存储字符串  一、串的定长顺序存储结构通常数组指的都是静态数组，如str[10]，它的长度是固定的，相对应的，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符串存储结构">
+<meta property="og:url" content="http://yoursite.com/2019/08/14/string/index.html">
+<meta property="og:site_name" content="项兴的个人博客">
+<meta property="og:description" content="数据结构中，字符串要单独用一种存储结构来存储，称为串存储结构。 存储一个字符串，有以下3种具体存储结构：  定长顺序存储：实际上就是用普通数组（静态数组）存储。例如C语言中char a[20] = “data.biancheng.net” 堆分配存储：用动态数组存储字符串 块链存储：用链表存储字符串  一、串的定长顺序存储结构通常数组指的都是静态数组，如str[10]，它的长度是固定的，相对应的，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/006fou7Wgy1g5z0jw24k8j30ee05jglk.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/006fou7Wgy1g5z7frk8fnj30lk08374v.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/006fou7Wgy1g5z80j2xehj30e9042wee.jpg">
+<meta property="og:updated_time" content="2019-08-14T07:09:06.531Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="字符串存储结构">
+<meta name="twitter:description" content="数据结构中，字符串要单独用一种存储结构来存储，称为串存储结构。 存储一个字符串，有以下3种具体存储结构：  定长顺序存储：实际上就是用普通数组（静态数组）存储。例如C语言中char a[20] = “data.biancheng.net” 堆分配存储：用动态数组存储字符串 块链存储：用链表存储字符串  一、串的定长顺序存储结构通常数组指的都是静态数组，如str[10]，它的长度是固定的，相对应的，">
+<meta name="twitter:image" content="https://wx3.sinaimg.cn/mw690/006fou7Wgy1g5z0jw24k8j30ee05jglk.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="项兴的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/wuticon.webp">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
+</head>
+</html>
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" title="图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档(目录)</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-string" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      字符串存储结构
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/08/14/string/" class="article-date">
+  <time datetime="2019-08-14T01:40:36.286Z" itemprop="datePublished">2019-08-14</time>
+</a>
+    
+    
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>数据结构中，字符串要单独用一种存储结构来存储，称为串存储结构。</p>
+<p>存储一个字符串，有以下3种具体存储结构：</p>
+<ol>
+<li><strong>定长顺序存储</strong>：实际上就是用普通数组（静态数组）存储。例如C语言中char a[20] = “data.biancheng.net”</li>
+<li><strong>堆分配存储</strong>：用动态数组存储字符串</li>
+<li><strong>块链存储</strong>：用链表存储字符串</li>
+</ol>
+<h2 id="一、串的定长顺序存储结构"><a href="#一、串的定长顺序存储结构" class="headerlink" title="一、串的定长顺序存储结构"></a>一、串的定长顺序存储结构</h2><p>通常数组指的都是<strong>静态数组</strong>，如str[10]，它的长度是固定的，相对应的，还有<strong>动态数组</strong>，它使用malloc和free函数动态申请和释放空间，因此动态数组的长度是可变的。</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">20</span>]=<span class="string">"data.biancheng.net"</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,str);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="二、串的堆分配存储"><a href="#二、串的堆分配存储" class="headerlink" title="二、串的堆分配存储"></a>二、串的堆分配存储</h2><p>编程语言通常会将程序占有的内存空间分成多个不同的区域，程序包含的数据会被分门别类并存储到对应的区域。</p>
+<p>对C语言而言，程序会将内存分为 4 个区域，分别为<strong>堆区</strong>、<a href="http://data.biancheng.net/view/169.html" target="_blank" rel="noopener">**栈</a>区<strong>、</strong>数据区<strong>和</strong>代码区**。</p>
+<p>与其他区域不同，<strong>堆区的内存空间需要程序员手动使用 malloc 函数申请，并且在不用后要手动通过 free 函数将其释放</strong>。</p>
+<p>C 语言中使用 malloc 函数最多的场景是给数组分配空间，这类数组称为动态数组。例如：</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *a = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="number">5</span>*<span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br></pre></td></tr></table></figure></div>
+
+<p>此行代码创建了一个动态数组 a，通过使用 malloc 申请了 5 个 char 类型大小的堆存储空间。</p>
+<p>动态数组相比普通数组（静态数组）的优势是长度可变，换句话说，根据需要动态数组可额外申请更多的堆空间（使用 realloc 函数）</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = (<span class="keyword">char</span>*)<span class="built_in">realloc</span>(a,<span class="number">10</span>*<span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *a1 = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">char</span> *a2 = <span class="literal">NULL</span>;</span><br><span class="line">	a1 = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="number">20</span>*<span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">	<span class="built_in">strcpy</span>(a1,<span class="string">"wuhan university"</span>);<span class="comment">//将字符串复制给a1</span></span><br><span class="line">	a2 = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="number">20</span>*<span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">	<span class="built_in">strcpy</span>(a2,<span class="string">" of technology"</span>);</span><br><span class="line">	<span class="keyword">int</span> lengthA1=<span class="built_in">strlen</span>(a1);</span><br><span class="line">	<span class="keyword">int</span> lengthA2=<span class="built_in">strlen</span>(a2);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"a1串的长度为：%d\n\n"</span>,lengthA1);<span class="comment">//长度为16，占用的内存空间却为17 </span></span><br><span class="line">	<span class="comment">//尝试将合并的串存储在a1中，如果a1空间不够，则用realloc动态申请</span></span><br><span class="line">	<span class="keyword">if</span>(lengthA1&lt;lengthA1+lengthA2)&#123;</span><br><span class="line">		a1=(<span class="keyword">char</span>*)<span class="built_in">realloc</span>(a1,(lengthA1+lengthA2+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="comment">//合并两个串到a1中</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=lengthA1;i&lt;lengthA1+lengthA2;i++)&#123;</span><br><span class="line">		a1[i]=a2[i-lengthA1];</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="comment">//串的末尾要添加\0，避免出错</span></span><br><span class="line">	a1[lengthA1+lengthA2]=<span class="string">'\0'</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%s"</span>,a1);</span><br><span class="line">	<span class="comment">//用完动态数组要立即释放</span></span><br><span class="line">	<span class="built_in">free</span>(a1);</span><br><span class="line">	<span class="built_in">free</span>(a2);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果：</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wgy1g5z0jw24k8j30ee05jglk.jpg" alt="result"></p>
+<p>注意，程序中给 a1 和 a2 赋值时，使用了 strcpy 复制函数。这里不能直接用 a1 =”wuhan university”，程序编译会出错，报错信息为 “没有 malloc 的空间不能 free”。因为 strcpy 函数是将字符串复制到申请的存储空间中，而直接赋值是字符串存储在别的内存空间（本身是一个常量，放在数据区）中，更改了指针 a1 和 a2 的指向，也就是说，之前动态申请的存储空间虽然申请了，结果还没用呢就丢了。</p>
+<h2 id="三、串的块链存储"><a href="#三、串的块链存储" class="headerlink" title="三、串的块链存储"></a>三、串的块链存储</h2><p>指的是使用链表结构存储字符串</p>
+<p>单链表的“单”强调的仅是链表各个节点只能有一个指针，并没有限制数据域中存储数据的具体个数，比如int data，占四个字节，而char类型占一个字节，在设计链表节点的结构时，可以令节点存储多个数据。</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/006fou7Wgy1g5z7frk8fnj30lk08374v.jpg" alt></p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> linkNum 3 <span class="comment">//全局设置链表中节点存储数据的个数</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> a[linkNum];<span class="comment">//数据域可存放linkNum个数据 </span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">link</span> *<span class="title">next</span>;</span><span class="comment">//代表指针域，指向直接后继元素 </span></span><br><span class="line">&#125;link; </span><br><span class="line"></span><br><span class="line"><span class="function">link* <span class="title">initLink</span><span class="params">(link *head,<span class="keyword">char</span> *str)</span></span>;<span class="comment">//定义一个指针str，指向存储char类型数据的地址空间 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">displayLink</span><span class="params">(link *head)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	link *head=<span class="literal">NULL</span>;</span><br><span class="line">	head = initLink(head,<span class="string">"wuhan university of technology"</span>);</span><br><span class="line">	displayLink(head);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化链表，其中head为头指针，str为存储的字符串</span></span><br><span class="line"><span class="function">link* <span class="title">initLink</span><span class="params">(link *head,<span class="keyword">char</span> *str)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> length = <span class="built_in">strlen</span>(str);</span><br><span class="line">	<span class="comment">//根据字符串的长度，计算出链表中使用节点的个数,多出来的部分用"#"补上 </span></span><br><span class="line">	<span class="keyword">int</span> num = length/linkNum;</span><br><span class="line">	<span class="keyword">if</span>(length%linkNum)&#123;</span><br><span class="line">		num++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//创建并初始化首元节点</span></span><br><span class="line">	head = (link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(link));</span><br><span class="line">	head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">	link *temp=head;</span><br><span class="line">	<span class="comment">//初始化链表//头指针指向首元节点，为它的数据域赋值 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> j=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(;j&lt;linkNum;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(i*linkNum+j&lt;length)&#123;</span><br><span class="line">				temp-&gt;a[j]=str[i*linkNum+j];</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				temp-&gt;a[j]=<span class="string">"#"</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(i*linkNum+j&lt;length)&#123;</span><br><span class="line">			link *newlink = (link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(link));</span><br><span class="line">			newlink-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">			temp-&gt;next = newlink;</span><br><span class="line">			temp = newlink;</span><br><span class="line">		&#125;</span><br><span class="line">	 &#125; </span><br><span class="line">	 <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出链表</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">displayLink</span><span class="params">(link *head)</span></span>&#123;</span><br><span class="line">	link *temp = head;</span><br><span class="line">	<span class="keyword">while</span>(temp)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;linkNum;i++)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%c"</span>,temp-&gt;a[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		temp=temp-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果：</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/006fou7Wgy1g5z80j2xehj30e9042wee.jpg" alt="result"></p>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2019/08/13/bitcoin_blockchain3/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">比特币与区块链（三）</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/lixian.png" title="图片来自网络"></img>
+    <h3 class="avatar-name">
+      
+        项兴
+      
+    </h3>
+    <p class="avatar-slogan">
+      武汉理工大学学生
+    </p>
+  </div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=200 height=86 src="//music.163.com/outchain/player?type=2&id=757567&auto=1&height=66"></iframe>
+</div>
+
+
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/14/string/">字符串存储结构</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/13/bitcoin_blockchain3/">比特币与区块链（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/13/bitcoin_blockchain2/">比特币与区块链（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/13/linkQueue/">链式队列及基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/13/orderQueue/">顺序队列及其实现</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://xiangxing1998.github.io/" title target='_blank'
+        >我的博客</a>
+      
+        <a style="display: block;" href="https://weibo.com/u/5724277716?is_all=1" title target='_blank'
+        >新浪微博</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2019 Xiangxing &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档(目录)</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>
