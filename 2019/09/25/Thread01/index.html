@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Java线程实现方式(一) | 项兴的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="一、并发与并行 想一边听歌，一边玩游戏，这得怎么解决？ 答：多进程或多线程  CPU用来执行任务  二、进程与线程注：以下两幅图中有部分错误，参考黑马程序员课程，可能不严谨，若有：后面返回更正 Ctrl + Alt +Delete       开启任务管理器，查看电脑当前进程，以及进程中的线程数 进程是系统运行程序的基本单位 系统运行一个程序，（软件封装应用程序），是一个进程从创建、运行到消亡的过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java线程实现方式(一)">
+<meta property="og:url" content="http://yoursite.com/2019/09/25/Thread01/index.html">
+<meta property="og:site_name" content="项兴的个人博客">
+<meta property="og:description" content="一、并发与并行 想一边听歌，一边玩游戏，这得怎么解决？ 答：多进程或多线程  CPU用来执行任务  二、进程与线程注：以下两幅图中有部分错误，参考黑马程序员课程，可能不严谨，若有：后面返回更正 Ctrl + Alt +Delete       开启任务管理器，查看电脑当前进程，以及进程中的线程数 进程是系统运行程序的基本单位 系统运行一个程序，（软件封装应用程序），是一个进程从创建、运行到消亡的过">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/006fou7Wgy1g5vg81dupuj30wq0afjw0.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5vvrfknydj30pv097td9.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/006fou7Wly1g5vvs6aj06j30sr0c1116.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5vvsc90emj30k40d1k1i.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5vvsjb49yj30tn0c1q7q.jpg">
+<meta property="og:updated_time" content="2019-08-11T10:01:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java线程实现方式(一)">
+<meta name="twitter:description" content="一、并发与并行 想一边听歌，一边玩游戏，这得怎么解决？ 答：多进程或多线程  CPU用来执行任务  二、进程与线程注：以下两幅图中有部分错误，参考黑马程序员课程，可能不严谨，若有：后面返回更正 Ctrl + Alt +Delete       开启任务管理器，查看电脑当前进程，以及进程中的线程数 进程是系统运行程序的基本单位 系统运行一个程序，（软件封装应用程序），是一个进程从创建、运行到消亡的过">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/006fou7Wgy1g5vg81dupuj30wq0afjw0.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="项兴的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/wuticon.webp">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
+</head>
+</html>
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" title="图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档(目录)</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-Thread01" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      Java线程实现方式(一)
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/09/25/Thread01/" class="article-date">
+  <time datetime="2019-09-24T16:52:40.650Z" itemprop="datePublished">2019-09-25</time>
+</a>
+    
+    
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h2 id="一、并发与并行"><a href="#一、并发与并行" class="headerlink" title="一、并发与并行"></a>一、并发与并行</h2><blockquote>
+<p>想一边听歌，一边玩游戏，这得怎么解决？</p>
+<p>答：多进程或多线程</p>
+</blockquote>
+<p>CPU用来执行任务</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/006fou7Wgy1g5vg81dupuj30wq0afjw0.jpg" alt="并发与并行"></p>
+<h2 id="二、进程与线程"><a href="#二、进程与线程" class="headerlink" title="二、进程与线程"></a>二、进程与线程</h2><p><del>注：以下两幅图中有部分错误，参考黑马程序员课程，可能不严谨，若有：后面返回更正</del></p>
+<p>Ctrl + Alt +Delete       开启任务管理器，查看电脑当前进程，以及进程中的线程数</p>
+<p><strong><u>进程</u></strong>是系统运行程序的基本单位</p>
+<p>系统运行一个程序，（软件封装应用程序），是一个进程从创建、运行到消亡的过程。</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5vvrfknydj30pv097td9.jpg" alt="进程"></p>
+<p><strong><u>线程</u></strong>是进程中的一个执行单元，负责当前进程中程序的执行</p>
+<p>一个程序运行后至少有一个线程，一个进程可以包含多个线程</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/006fou7Wly1g5vvs6aj06j30sr0c1116.jpg" alt="线程"></p>
+<h2 id="三、线程调度"><a href="#三、线程调度" class="headerlink" title="三、线程调度"></a>三、线程调度</h2><ul>
+<li><p>分时调度</p>
+<p>所有线程轮流使用CPU的使用权，平均分配给每个线程占用CPU的时间</p>
+</li>
+<li><p>抢占式调度</p>
+<p>优先让优先级高的线程使用CPU，如果线程的优先级相同，那么会随机选择一个（线程随机性），Java使用的是抢占式调度</p>
+</li>
+</ul>
+<p>可以在任务管理器中设置线程的优先级</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5vvsc90emj30k40d1k1i.jpg" alt="线程调度"></p>
+<h2 id="四、主线程"><a href="#四、主线程" class="headerlink" title="四、主线程"></a>四、主线程</h2><p>Java使用java.lang.Thread类代表线程，所有线程对象都必须是Thread类或其子类的实例。每个线程的作用是完成一定的任务，实际上就是执行一段程序流即一段顺序执行的代码。Java使用线程执行体来代表这段程序流。</p>
+<p>Java中通过继承Thread类来创建并启动多线程的步骤如下：</p>
+<ol>
+<li>定义Thread类的子类，并重写该类的run()方法，该run()方法的方法体就代表了线程需要完成的任务，因此把run()方法称为线程执行体。</li>
+<li>创建Thread类的实例，即创建了线程对象。</li>
+<li>调用线程对象的start()方法来启动该线程。</li>
+</ol>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5vvsjb49yj30tn0c1q7q.jpg" alt="主进程"></p>
+<p>对这种只有一个主线程的单线程程序而言：</p>
+<p>若主线程中出现了一个异常，会终止，阻碍该线程中剩余代码的执行。</p>
+<p>可若使用多线程，那么若有一个线程出现异常中止，不会阻碍其它线程的执行。</p>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+      <a href="/2019/09/25/wideTable/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption"></strong>
+        <div class="article-nav-title">
+          
+            广义表
+          
+        </div>
+      </a>
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2019/09/25/string/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">字符串存储结构</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/lixian.png" title="图片来自网络"></img>
+    <h3 class="avatar-name">
+      
+        项兴
+      
+    </h3>
+    <p class="avatar-slogan">
+      武汉理工大学学生
+    </p>
+  </div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=200 height=86 src="//music.163.com/outchain/player?type=2&id=1091088&auto=1&height=66"></iframe>
+</div>
+
+
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/25/wideTable/">广义表</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/Thread01/">Java线程实现方式(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/string/">字符串存储结构</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/staticLinkTable_create/">静态链表的创建</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/staticLinkTable_BasOper/">数据结构---静态链表的基本操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://xiangxing1998.github.io/" title target='_blank'
+        >我的博客</a>
+      
+        <a style="display: block;" href="https://weibo.com/u/5724277716?is_all=1" title target='_blank'
+        >新浪微博</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2019 Xiangxing &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档(目录)</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>循环链表实现约瑟夫环 | 项兴的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="循环链表：把链表的两头连接，使其成为一个环状链表。 本质上还是链表，依然能找到头指针和首元节点，只是循环链表首尾相连，其他完全一样，有第一个节点和最后一个节点，只需把最后一个节点的指针指向头节点。（多用于遍历） 约瑟夫环问题，经典的循环链表问题： 已知n个人（分别用编号1,2,3, … ,n表示）围坐在一张圆桌周围，从编号为k的人开始顺时针报数，数到m的那个人出列；他的下一个人又从1开始，还是顺时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="循环链表实现约瑟夫环">
+<meta property="og:url" content="http://yoursite.com/2019/09/25/loopLink/index.html">
+<meta property="og:site_name" content="项兴的个人博客">
+<meta property="og:description" content="循环链表：把链表的两头连接，使其成为一个环状链表。 本质上还是链表，依然能找到头指针和首元节点，只是循环链表首尾相连，其他完全一样，有第一个节点和最后一个节点，只需把最后一个节点的指针指向头节点。（多用于遍历） 约瑟夫环问题，经典的循环链表问题： 已知n个人（分别用编号1,2,3, … ,n表示）围坐在一张圆桌周围，从编号为k的人开始顺时针报数，数到m的那个人出列；他的下一个人又从1开始，还是顺时">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5wocv0j2ij30qn0e5q3a.jpg">
+<meta property="og:updated_time" content="2019-08-12T02:18:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="循环链表实现约瑟夫环">
+<meta name="twitter:description" content="循环链表：把链表的两头连接，使其成为一个环状链表。 本质上还是链表，依然能找到头指针和首元节点，只是循环链表首尾相连，其他完全一样，有第一个节点和最后一个节点，只需把最后一个节点的指针指向头节点。（多用于遍历） 约瑟夫环问题，经典的循环链表问题： 已知n个人（分别用编号1,2,3, … ,n表示）围坐在一张圆桌周围，从编号为k的人开始顺时针报数，数到m的那个人出列；他的下一个人又从1开始，还是顺时">
+<meta name="twitter:image" content="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5wocv0j2ij30qn0e5q3a.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="项兴的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/wuticon.webp">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
+</head>
+</html>
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" title="图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档(目录)</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-loopLink" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      循环链表实现约瑟夫环
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/09/25/loopLink/" class="article-date">
+  <time datetime="2019-09-24T16:52:40.290Z" itemprop="datePublished">2019-09-25</time>
+</a>
+    
+    
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>循环链表：把链表的两头连接，使其成为一个环状链表。</p>
+<p>本质上还是链表，依然能找到头指针和首元节点，只是循环链表首尾相连，其他完全一样，有第一个节点和最后一个节点，只需把最后一个节点的指针指向头节点。（多用于遍历）</p>
+<p><strong>约瑟夫环问题</strong>，经典的循环链表问题：</p>
+<p>已知n个人（分别用编号1,2,3, … ,n表示）围坐在一张圆桌周围，从编号为k的人开始顺时针报数，数到m的那个人出列；他的下一个人又从1开始，还是顺时针开始报数，数到m的那个人又出列；依次重复下去，知道圆桌上剩余一个人。（顺逆时针可改，问题细节可变，中心思想就是循环链表）:</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="C"><figure class="iseeu highlight /c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> number;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">person</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;person;</span><br><span class="line"></span><br><span class="line"><span class="function">person* <span class="title">initLink</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	person *head = (person*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(person));</span><br><span class="line">	head-&gt;number=<span class="number">1</span>;<span class="comment">//头节点不为空，不是指向首元节点，知道头指针即可知道链表所有元素的位置 </span></span><br><span class="line">	head-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	person *cyclic=head;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		person *body=(person*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(person));<span class="comment">//链表随用随取物理空间 </span></span><br><span class="line">		body-&gt;number=i;</span><br><span class="line">		body-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">		cyclic-&gt;next=body;</span><br><span class="line">		cyclic=cyclic-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	cyclic-&gt;next=head;<span class="comment">//首尾相连</span></span><br><span class="line">	<span class="keyword">return</span> head; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">findAndKillK</span><span class="params">(person *head,<span class="keyword">int</span> k,<span class="keyword">int</span> m)</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	person *tail=head;<span class="comment">//临时指针。指向头节点</span></span><br><span class="line">	<span class="comment">//找到链表第一个节点的上一个节点，为删除操作做准备</span></span><br><span class="line">	<span class="keyword">while</span>(tail-&gt;next!=head)&#123;</span><br><span class="line">		tail=tail-&gt;next;</span><br><span class="line">	&#125; </span><br><span class="line">	person *p=head;</span><br><span class="line">	<span class="comment">//找到编号为k的人</span></span><br><span class="line">	<span class="keyword">while</span>(p-&gt;number!=k)&#123;</span><br><span class="line">		tail=p;</span><br><span class="line">		p=p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//从编号为k的人开始（即数据域元素为k）,只有符合p-&gt;next==p时，说明链表中除了p节点，所有编号都出列了</span></span><br><span class="line">	<span class="keyword">while</span>(p-&gt;next!=p)&#123;</span><br><span class="line">		<span class="comment">//找到从p报数1开始，报m的人（是报m，而不是它数据域为m），并且还要知道数m-1的人的位置，方便做删除操作。</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;m;i++)&#123;</span><br><span class="line">			tail=p;</span><br><span class="line">			p=p-&gt;next;</span><br><span class="line">		&#125; </span><br><span class="line">		tail-&gt;next=p-&gt;next;<span class="comment">//从链表上将p节点摘下来</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"出列人的编号为：%d\n"</span>,p-&gt;number);</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">		p=tail-&gt;next;<span class="comment">//从出列人的下一个人开始数 ，当进行很多次之后，会有p-&gt;next==p的情况，说明游戏结束 </span></span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"胜利玩家的编号为：%d\n"</span>,p-&gt;number);</span><br><span class="line">	<span class="built_in">free</span>(p);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"输入圆桌上的人数n："</span>);</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	person *head=initLink(n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"从第k人开始报数(k&gt;1且k&lt;%d)："</span>,n);</span><br><span class="line">	<span class="keyword">int</span> k;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"数到m的人出列："</span>);</span><br><span class="line">	<span class="keyword">int</span> m;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;m);</span><br><span class="line">	findAndKillK(head,k,m);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果如图：</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/006fou7Wly1g5wocv0j2ij30qn0e5q3a.jpg" alt="result"></p>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+      <a href="/2019/09/25/orderQueue/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption"></strong>
+        <div class="article-nav-title">
+          
+            顺序队列及其实现
+          
+        </div>
+      </a>
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2019/09/25/LinkTable_create/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">数据结构---链表的初始化（C）</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/lixian.png" title="图片来自网络"></img>
+    <h3 class="avatar-name">
+      
+        项兴
+      
+    </h3>
+    <p class="avatar-slogan">
+      武汉理工大学学生
+    </p>
+  </div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=200 height=86 src="//music.163.com/outchain/player?type=2&id=1091088&auto=1&height=66"></iframe>
+</div>
+
+
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/25/wideTable/">广义表</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/Thread01/">Java线程实现方式(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/string/">字符串存储结构</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/staticLinkTable_create/">静态链表的创建</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/staticLinkTable_BasOper/">数据结构---静态链表的基本操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://xiangxing1998.github.io/" title target='_blank'
+        >我的博客</a>
+      
+        <a style="display: block;" href="https://weibo.com/u/5724277716?is_all=1" title target='_blank'
+        >新浪微博</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2019 Xiangxing &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档(目录)</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>静态链表的创建 | 项兴的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889//优点：存取速度高效，通过下标来直接存储//缺点：1.插入和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态链表的创建">
+<meta property="og:url" content="http://yoursite.com/2019/09/25/staticLinkTable_create/index.html">
+<meta property="og:site_name" content="项兴的个人博客">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889//优点：存取速度高效，通过下标来直接存储//缺点：1.插入和">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-10T15:32:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="静态链表的创建">
+<meta name="twitter:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889//优点：存取速度高效，通过下标来直接存储//缺点：1.插入和">
+  
+    <link rel="alternate" href="/atom.xml" title="项兴的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/wuticon.webp">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
+</head>
+</html>
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" title="图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档(目录)</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-staticLinkTable_create" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      静态链表的创建
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/09/25/staticLinkTable_create/" class="article-date">
+  <time datetime="2019-09-24T16:52:40.560Z" itemprop="datePublished">2019-09-25</time>
+</a>
+    
+    
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">//优点：存取速度高效，通过下标来直接存储</span><br><span class="line">//缺点：1.插入和删除比较慢，2.不可以增长长度 </span><br><span class="line">//比如：插入或者删除一个元素时，整个表需要遍历移动元素来重新排一次顺序 </span><br><span class="line"></span><br><span class="line">//链表存储是在程序运行过程中动态的分配空间，只要存储器还有空间，就不会发生存储溢出问题，随用随取，随机存储 </span><br><span class="line">//优点：插入和删除速度快，保留原有的物理顺序，比如：插入或者删除一个元素时，只需要改变指针指向即可</span><br><span class="line">//缺点：查找速度慢，因为查找时，需要循环链表访问</span><br><span class="line"></span><br><span class="line">//从它们的存储优缺点来看，各自有各自的使用场景，比如：频繁的查找却很少的插入和删除操作可以用顺序表存储，如果频繁的插入和删除操作很少的查询就可以使用链表存储</span><br><span class="line">//顺序表可快速访问元素，链表可快速增加或删除元素</span><br><span class="line"></span><br><span class="line">//而静态链表，兼顾了顺序表和链表的优点于一身</span><br><span class="line">//使用静态链表存储数据，数据会全部存储在数组中（和顺序表一样），但存储位置是随机的，数据之间“一对一”的逻辑关系通过一个整型变量（称为“游标”，和指针功能类似）维持（和链表类似）</span><br><span class="line">//a[0]默认不存储元素，是备用链表表头，若静态链表中数组下标为0的位置上存有数据，则证明数组已满</span><br><span class="line"></span><br><span class="line">//静态链表包含以下两部分信息：</span><br><span class="line">//数据域</span><br><span class="line">//游标：游标变量其实就是数组下标，表示直接后继元素所在数组中的位置 </span><br><span class="line"></span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#define maxSize 6</span><br><span class="line"></span><br><span class="line">typedef struct&#123;</span><br><span class="line">	int data;//数据域 </span><br><span class="line">	int cur;//游标 </span><br><span class="line">&#125;staLink;</span><br><span class="line"> </span><br><span class="line">//将结构体数组中所有分量链接到备用链表中</span><br><span class="line">void reserveArr(staLink *array);</span><br><span class="line">//初始化静态链表</span><br><span class="line">int initArr(staLink *array);</span><br><span class="line">//输出函数</span><br><span class="line">void displayArr(staLink *array,int body);</span><br><span class="line">//从备用链表上摘下空闲节点的函数</span><br><span class="line">int mallocArr(staLink *array);</span><br><span class="line">int main()&#123;</span><br><span class="line">	staLink array[maxSize];</span><br><span class="line">	int body=initArr(array);</span><br><span class="line">	printf(&quot;静态链表为：\n&quot;);</span><br><span class="line">	displayArr(array,body);</span><br><span class="line">	return 0;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">//创建备用链表</span><br><span class="line">void reserveArr(staLink *array)&#123;</span><br><span class="line">	for(int i=0;i&lt;maxSize;i++)&#123;</span><br><span class="line">		array[i].cur = i+1;//将每个数组分量链接到一起 </span><br><span class="line">	&#125;</span><br><span class="line">	array[maxSize-1].cur = 0;//链表最后一个节点的游标值为0 </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">//提取分配空间</span><br><span class="line">int mallocArr(staLink *array)&#123;</span><br><span class="line">	//若备用链表非空，则返回分配的节点下标，否则返回0（当分配最后一个节点时，该节点的游标值为0）</span><br><span class="line">	//改备用链表头节点的游标值</span><br><span class="line">	int i=array[0].cur;//分配的节点的数组下标 </span><br><span class="line">	if(array[0].cur)&#123;</span><br><span class="line">		array[0].cur = array[i].cur;//分配了备用链表的一个节点出来，备用链表头节点a[0]游标开始指向下一个备用链表节点 </span><br><span class="line">	&#125; </span><br><span class="line">	return i;</span><br><span class="line">&#125; //这时候array[i]就被提取出来了</span><br><span class="line"></span><br><span class="line">//初始化静态链表</span><br><span class="line">int initArr(staLink *array)&#123;</span><br><span class="line">	reserveArr(array);</span><br><span class="line">	int body=mallocArr(array);//根据前面的reserve()，body=1 </span><br><span class="line">	//声明一个变量，把它当指针使，指向链表的最后一个节点，因为链表为空，所以和头节点重合</span><br><span class="line">	int tempBody = body;</span><br><span class="line">	for(int i=1;i&lt;4;i++)&#123;//数据链表表头没有给数据域赋值 </span><br><span class="line">		int j=mallocArr(array);//从备用链表中拿出空闲的节点 </span><br><span class="line">		array[tempBody].cur = j;//将申请的空弦节点链接在链表的最后一个节点后面，第一次循环时，是链接在头节点a[1]的后面 </span><br><span class="line">		array[j].data = i;//对新申请的节点的数据域初始化</span><br><span class="line">		tempBody = j ;//将指向链表最后一个节点的指针后移，这个节点的游标为0，指向a[0] </span><br><span class="line">	&#125; </span><br><span class="line">	array[tempBody].cur = 0;//新的链表最后一个节点的指针设置为0</span><br><span class="line">	return body;//body为数据链表的表头下标 </span><br><span class="line">&#125; </span><br><span class="line">//定义一个指针变量array，指向数组的存储控件，其实，数组名是个地址 </span><br><span class="line">void displayArr(staLink *array,int body)&#123;</span><br><span class="line">	int tempBody = body;//tempBody准备做遍历使用</span><br><span class="line">	while(array[tempBody].cur) &#123;</span><br><span class="line">		printf(&quot;(%d,%d) &quot;,array[tempBody].data,array[tempBody].cur);</span><br><span class="line">		tempBody = array[tempBody].cur;</span><br><span class="line">	&#125;</span><br><span class="line">	//输出静态链表最后一个数据节点，该节点可能不是静态链表的最后一个节点，但是数据链表的最后一个，还有备用链表部分</span><br><span class="line">	printf(&quot;(%d,%d)\n&quot;,array[tempBody].data,array[tempBody].cur);</span><br><span class="line">&#125;</span><br><span class="line">//顺序表存储是将数据元素放到一块连续的内存存储空间，存取效率高，速度快。但是不可以动态增加长度</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>在输出结果中，对a[1]数据域并没有赋值，却出现一个程序中没体现的值。</strong></p>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+      <a href="/2019/09/25/string/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption"></strong>
+        <div class="article-nav-title">
+          
+            字符串存储结构
+          
+        </div>
+      </a>
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2019/09/25/staticLinkTable_BasOper/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">数据结构---静态链表的基本操作</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/lixian.png" title="图片来自网络"></img>
+    <h3 class="avatar-name">
+      
+        项兴
+      
+    </h3>
+    <p class="avatar-slogan">
+      武汉理工大学学生
+    </p>
+  </div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=200 height=86 src="//music.163.com/outchain/player?type=2&id=1091088&auto=1&height=66"></iframe>
+</div>
+
+
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/25/wideTable/">广义表</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/Thread01/">Java线程实现方式(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/string/">字符串存储结构</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/staticLinkTable_create/">静态链表的创建</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/staticLinkTable_BasOper/">数据结构---静态链表的基本操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://xiangxing1998.github.io/" title target='_blank'
+        >我的博客</a>
+      
+        <a style="display: block;" href="https://weibo.com/u/5724277716?is_all=1" title target='_blank'
+        >新浪微博</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2019 Xiangxing &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档(目录)</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>
